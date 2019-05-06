@@ -1,0 +1,4 @@
+#Tue Apr 02 18:33:06 CST 2019
+base.0=D\:\\LA\\AndroidStudioProjects\\Teaching Resources\\AudioVideoVideoPlay\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\9
+path.0=classes.dex
+renamed.0=classes.dex

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ClockDemo</string>
+    <string name="add_alarm">添加闹钟</string>
+    <string name="start">开始</string>
+    <string name="pause">暂停</string>
+    <string name="resume">恢复</string>
+    <string name="reset">重置</string>
+    <string name="lap">折叠</string>
+</resources>

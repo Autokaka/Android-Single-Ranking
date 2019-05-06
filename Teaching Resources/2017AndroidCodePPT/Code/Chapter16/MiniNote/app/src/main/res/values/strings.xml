@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="wel_title">欢迎使用</string>
+    <string name="exitp">退出</string>
+    <string name="all">浏览</string>
+    <string name="newinsert">添加</string>
+    <string name="app_name">个人记事本</string>
+    <string name="menu_insert">添加</string>
+    <string name="menu_delete">删除</string>
+    <string name="title">Title</string>
+    <string name="body">Content</string>
+    <string name="hint_title">请输入标题</string>
+    <string name="hint_content">请输入内容</string>
+    <string name="action_settings">Action_Settings</string>
+    <string name="confirm">确定</string>
+    <string name="delet">删除</string>
+    <string name="edit_diary">编辑</string>
+    <string name="title_activity_main">ActivityMain</string>
+    <string name="title_activity_menu">ActivityMenu</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_note_edit">ActivityNoteEdit</string>
+
+</resources>

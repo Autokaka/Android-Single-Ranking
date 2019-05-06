@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    <!--添加start_service按钮-->
+    <Button android:id="@+id/btnStartService"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="start_service"/>
+    <!--添加pause_service按钮-->
+    <Button android:id="@+id/btnPauseService"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="pause_service"/>
+    <!--添加stop_service按钮-->
+    <Button android:id="@+id/btnStopService"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="stop_service"/>
+
+</LinearLayout>

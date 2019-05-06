@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="app_name">demo</string>
+        <string name="action_settings">Settings</string>
+        <string name="example_edittext">Example showing EditText</string>
+        <string name="show_the_text">Show the Text</string>
+        <string name="enter_text">text changes</string>
+    </resources>
+

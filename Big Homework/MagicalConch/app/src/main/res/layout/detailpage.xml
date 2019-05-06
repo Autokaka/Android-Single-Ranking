@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:columnCount="2"
+    android:orientation="vertical"
+    android:useDefaultMargins="true"
+    tools:context="cn.dshitpie.magicalconch.detail_page">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mytoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="选择地点"
+            app:titleTextColor="#FFF"></android.support.v7.widget.Toolbar>
+
+        <Button
+            android:id="@+id/saveBT"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:background="#00000000"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="保存"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:textColor="@android:color/white" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_marginTop="24dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="2dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:src="@drawable/title"
+
+                />
+            <LinearLayout
+                android:layout_weight="15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:paddingRight="20dp"
+               >
+               <TextView
+                   android:layout_weight="3"
+                   android:layout_height="0dp"
+                   android:layout_width="fill_parent"
+                    android:gravity="start|center"
+                    android:hint="@string/title"
+                      />
+             <EditText
+                    android:id="@+id/titleEditText"
+                    android:layout_weight="6"
+                    android:layout_height="0dp"
+                    android:layout_width="fill_parent"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@layout/textview_style"
+                    android:singleLine="true"
+                    android:hint="@string/enter_title"
+                    android:padding="10dp"
+
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_gravity="center"
+            android:layout_width="380dp"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/l1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="-10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_marginTop="38dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="2dp"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:src="@drawable/content"
+                />
+            <LinearLayout
+                android:layout_weight="15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:paddingRight="20dp">
+            <TextView
+                android:layout_weight="3"
+                android:layout_height="0dp"
+                android:layout_width="fill_parent"
+                android:gravity="start|center"
+                android:hint="@string/affair" />
+            <EditText
+                android:id="@+id/affairEditText"
+                android:layout_weight="6"
+                android:layout_height="0dp"
+                android:layout_width="fill_parent"
+                android:layout_gravity="fill_horizontal"
+                android:background="@layout/textview_style"
+                android:hint="@string/enter_affair"
+                android:singleLine="true"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="380dp"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/l2" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="-10dp"
+            >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="2dp"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center"
+                    android:src="@drawable/deadline"
+                    />
+                <LinearLayout
+                    android:layout_weight="15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="20dp"
+                    >
+                    <TextView
+                        android:layout_weight="3"
+                        android:layout_height="0dp"
+                        android:layout_width="fill_parent"
+                        android:gravity="start|center"
+                        android:hint="@string/deadline" />
+                    <EditText
+                        android:id="@+id/deadlineEditText"
+                        android:layout_weight="6"
+                        android:layout_height="0dp"
+                        android:layout_width="fill_parent"
+                        android:layout_gravity="fill_horizontal"
+                        android:background="@layout/textview_style"
+                        android:hint="@string/enter_deadline"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+        </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_gravity="center"
+            android:layout_width="380dp"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/l3" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="-10dp"
+            >
+
+
+
+            <LinearLayout
+                android:layout_weight="15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                >
+
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_height="0dp"
+                    android:layout_width="fill_parent"
+                    android:gravity="start|center"
+                    android:hint="@string/location" />
+
+                <TextView
+                    android:id="@+id/locationEditText"
+                    android:layout_weight="6"
+                    android:layout_height="0dp"
+                    android:layout_width="fill_parent"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@layout/textview_style"
+                    android:hint="@string/enter_location"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/locationIV"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+
+                android:layout_weight="4"
+                android:gravity="start|center"
+                android:src="@drawable/location"
+         />
+        </LinearLayout>
+
+        <View
+            android:layout_gravity="start"
+            android:layout_width="315dp"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
+            android:background="@color/l4" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp">
+            <ImageView
+                android:id="@+id/deleteIV"
+                android:layout_weight="6"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/delete"/>
+            <TextView
+                android:layout_weight="6"
+                android:layout_width="fill_parent"
+                android:layout_height="-1dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:hint="@string/delete" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

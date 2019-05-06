@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Jukebox</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="song_titles">
+        <item>R   yu</item>
+        <item>E    Honda</item>
+        <item> Blanka </item>
+        <item>Guile</item>
+        <item>Ken</item>
+        <item>Chun Li</item>
+        <item>Zangief</item>
+        <item>Dhalsim</item>
+    </string-array>
+</resources>

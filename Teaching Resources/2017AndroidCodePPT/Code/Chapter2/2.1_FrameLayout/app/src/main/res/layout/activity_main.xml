@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <!--添加居中显示的安卓图标图片ImageView，将显示在最下层-->
+    <ImageView
+        android:src="@drawable/ic_launcher"
+        android:scaleType="fitCenter"
+        android:layout_height="392dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical" />
+    <!--添加居中显示的"Frame Demo"文字TextView，将显示在最上层-->
+    <TextView
+        android:text="Frame Demo"
+        android:textSize="30px"
+        android:textStyle="bold"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:layout_gravity="left|bottom" />
+</FrameLayout>

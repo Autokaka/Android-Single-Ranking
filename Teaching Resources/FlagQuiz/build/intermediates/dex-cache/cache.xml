@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/apple/.android/build-cache/65633ef02bff22a86b0981dd3310fd24b31018ca/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="28.0.3"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3a401565bf84dfd558f5bf07dc9aeb24348d28c7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="28.0.3"
+        sha1="12920f9016b8b05acbc2af7cdc13cef6946fe7d3">
+        <dex dex="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b6dc60fe49b3a9e21a1fad141b7ebc2e4b73b428/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/apple/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="28.0.3"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
+        <dex dex="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-v4-19.1.0_56bfa5fd5598f9f82c3c9ce311944fd8a5205abc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="28.0.3"
+        sha1="d5a4b5ede5984129dc6196f7fc7daf16462a5b0f">
+        <dex dex="/Users/apple/Desktop/FlagQuiz-Android_App-master1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_cdf153bca2526b70f62e0bad61b96e5f967963b1/classes.dex" />
+    </item>
+
+</items>

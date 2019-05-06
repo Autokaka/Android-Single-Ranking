@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MediaPlayer</string>
+    <string name="play_state">播放状态：</string>
+    <string name="stete_prepare">准备播放</string>
+    <string name="stete_playing">正在播放</string>
+    <string name="stete_pause">暂停播放</string>
+    <string name="stete_end">结束播放</string>
+    <string name="stete_error">播放出现错误</string>
+    <string name="start">播放</string>
+    <string name="puase">暂停</string>
+    <string name="end">停止</string>
+    <string name="restart">重播</string>
+</resources>

@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/apple/Desktop/android2018/androidfp3_examples/Calcolatrice2/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/apple/Desktop/android2018/androidfp3_examples/Calcolatrice2/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "4,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "125,56",
+                        "endColumns": "47,68",
+                        "endOffsets": "168,120"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,103",
+                        "endColumns": "47,68",
+                        "endOffsets": "98,167"
+                    }
+                }
+            ]
+        }
+    ]
+}

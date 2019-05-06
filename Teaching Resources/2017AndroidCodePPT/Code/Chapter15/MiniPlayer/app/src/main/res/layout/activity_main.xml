@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c0c0c0"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/b"
+        android:background="#808a87" >
+
+        <TextView
+            android:id="@+id/musicname"
+            android:layout_width="@dimen/c"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/yb"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/meun"
+            android:layout_width="@dimen/b"
+            android:layout_height="@dimen/b"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/meun" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/images"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/a"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/f"
+            android:layout_height="@dimen/f"
+            android:layout_centerInParent="true"
+            android:src="@drawable/maiyatang" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/b" >
+
+        <TextView
+            android:id="@+id/starttime"
+            android:layout_width="@dimen/a"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/t1"
+            android:textColor="#ff0000" />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="@dimen/a"
+            android:layout_height="wrap_content"
+            android:layout_weight="4" />
+
+        <TextView
+            android:id="@+id/overtime"
+            android:layout_width="@dimen/a"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/t2"
+            android:textColor="#ff0000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/b"
+        android:background="#808a87" >
+
+        <RelativeLayout
+            android:id="@+id/b1"
+            android:layout_width="@dimen/a"
+            android:layout_height="@dimen/b"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="@dimen/d"
+                android:layout_height="@dimen/d"
+                android:layout_centerInParent="true"
+                android:background="@drawable/stop" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/b2"
+            android:layout_width="@dimen/a"
+            android:layout_height="@dimen/b"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/left"
+                android:layout_width="@dimen/b"
+                android:layout_height="@dimen/b"
+                android:layout_centerInParent="true"
+                android:background="@drawable/left" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/b3"
+            android:layout_width="@dimen/a"
+            android:layout_height="@dimen/b"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/right"
+                android:layout_width="@dimen/b"
+                android:layout_height="@dimen/b"
+                android:layout_centerInParent="true"
+                android:background="@drawable/right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/b4"
+            android:layout_width="@dimen/a"
+            android:layout_height="@dimen/b"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/swit"
+                android:layout_width="@dimen/d"
+                android:layout_height="@dimen/d"
+                android:layout_centerInParent="true"
+                android:background="@drawable/swit" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
