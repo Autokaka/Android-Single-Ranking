@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.dshitpie.habitsgalaxy.View.CustomVideoView
+        android:id="@+id/videoview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/planet0"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/tree0" />
+
+        <ImageView
+            android:id="@+id/planet1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="-70dp"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/tree0" />
+
+        <ImageView
+            android:id="@+id/planet2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="-120dp"
+            android:layout_marginTop="100dp"
+            app:srcCompat="@drawable/tree0" />
+
+        <ImageView
+            android:id="@+id/planet3"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginLeft="-170dp"
+            android:layout_marginTop="200dp"
+            app:srcCompat="@drawable/tree0" />
+
+        <ImageView
+        android:id="@+id/planet4"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginLeft="-300dp"
+        android:layout_marginTop="330dp"
+        app:srcCompat="@drawable/tree0" />
+
+        <ImageView
+            android:id="@+id/planet5"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginLeft="-400dp"
+            android:layout_marginTop="480dp"
+            app:srcCompat="@drawable/tree0" />
+    </LinearLayout>
+
+</FrameLayout>
