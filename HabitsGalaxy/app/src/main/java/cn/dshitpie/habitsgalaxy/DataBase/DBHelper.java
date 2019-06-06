@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HabitsGalaxy.db";
 
     //初始化函数
-    public DBHelper(Context context ) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
