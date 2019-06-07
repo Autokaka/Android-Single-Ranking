@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DataAnalyser</string>
+    <string name="btn_choose_img">识别银行卡内容</string>
+    <string name="btn_get_json_data">获取JSON测试数据</string>
+    <string name="btn_get_xml_data">获取XML测试数据</string>
+    <string name="btn_get_php_data">获取PHP测试数据</string>
+    <string name="imgview_selected_image">展示选中的图片的详细内容</string>
+</resources>
