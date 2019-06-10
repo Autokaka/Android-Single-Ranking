@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="BookStore"></dbname>
+    <version value="2"></version>
+    <list>
+        <mapping class="cn.dshitpie.learnlitepal.Book"></mapping>
+        <mapping class="cn.dshitpie.learnlitepal.Category"></mapping>
+    </list>
+</litepal>
