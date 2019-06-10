@@ -22,12 +22,6 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_get_xml_data" />
 
-    <Button
-        android:id="@+id/get_php_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_get_php_data" />
-
     <ImageView
         android:id="@+id/selected_image"
         android:layout_width="match_parent"

@@ -27,13 +27,14 @@ import org.xmlpull.v1.*;
 import java.io.*;
 import java.util.*;
 import okhttp3.*;
-import cn.dshitpie.dataanalyser.OkHttpOperator;
 
 public class TestModeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "testapp";
     private static final int MATISSE_REQUEST_CODE = 100;
-    private OkHttpOperator myOperator;
+    protected static final int JSON = 1;
+    protected static final int XML = 2;
+    protected static final int IMG = 3;
     TextView responseText;
     ImageView selectedImgView;
 
@@ -41,18 +42,17 @@ public class TestModeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_mode);
-        myOperator = new OkHttpOperator();
+        Log.d(TAG, "-----TestModeActivity-----");
         applyForPermission();
         Button chooseImage = (Button) findViewById(R.id.choose_img);
         Button getJSONData = (Button) findViewById(R.id.get_json_data);
         Button getXMLData = (Button) findViewById(R.id.get_xml_data);
-        Button getPHPData = (Button) findViewById(R.id.get_php_data);
         selectedImgView = (ImageView) findViewById(R.id.selected_image);
         responseText = (TextView) findViewById(R.id.response_text);
         chooseImage.setOnClickListener(this);
         getJSONData.setOnClickListener(this);
         getXMLData.setOnClickListener(this);
-        getPHPData.setOnClickListener(this);
+        Log.d(TAG, "-----Done-----");
     }
 
     //集中处理按钮点击请求
@@ -64,18 +64,11 @@ public class TestModeActivity extends AppCompatActivity implements View.OnClickL
             default:
                 break;
             case R.id.get_json_data: {
-                responseData = myOperator.sendRequestForResult(myOperator.JSON);
-                showResponse(responseData);
+                sendRequest(JSON);
                 break;
             }
             case R.id.get_xml_data: {
-                responseData = myOperator.sendRequestForResult(myOperator.XML);
-                showResponse(responseData);
-                break;
-            }
-            case R.id.get_php_data: {
-                responseData = myOperator.sendRequestForResult(myOperator.PHP);
-                showResponse(responseData);
+                sendRequest(XML);
                 break;
             }
             case R.id.choose_img: {
@@ -142,10 +135,222 @@ public class TestModeActivity extends AppCompatActivity implements View.OnClickL
                         override(Target.SIZE_ORIGINAL);
                     }})
                     .into(selectedImgView);
-            String filePath = myOperator.getImgRealPath(this, result.get(0));
+            String filePath = getImgRealPath(this, result.get(0));
             showResponse(filePath);
-            String responseData = myOperator.sendRequestForResult(myOperator.IMG, filePath);
-            showResponse(responseData);
+            sendRequest(IMG, filePath);
         }
+    }
+
+    //Okhttp请求发送器
+    private void sendRequest(int requestDataType) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d(TAG, "sendRequestForResult1 -> Running!");
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = generateRequest(requestDataType);
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "sendRequestForResult1 -> 返回结果:\n" + responseData);
+                    responseData = parseResponse(responseData, requestDataType);
+                    showResponse(responseData);
+                    Log.d(TAG, "sendRequestForResult1 -> Done!");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    private void sendRequest(int requestDataType, String imagePath) {
+        Log.d(TAG, "-----sendRequestForResult(图片模式)-----");
+        if (IMG != requestDataType) {
+            Log.d(TAG,"解析类型错误!");
+        } else {
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request request = generateRequest(IMG, imagePath);
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "请求发送失败: " + e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    Log.d(TAG, "请求发送成功: " + responseData);
+                    showResponse(responseData);
+                }
+            });
+        }
+        Log.d(TAG, "-----Done-----");
+    }
+
+    //依据场景的request生成器
+    private Request generateRequest(int requestDataType) {
+        Log.d(TAG, "-----generateRequest-----");
+        String url = "http://134.175.233.183/CardInfo/";
+        switch (requestDataType) {
+            default: {
+                Log.d(TAG, "文件类型错误!");
+                break;
+            }
+            case JSON: {
+                url += "CardInfo_test.json";
+                break;
+            }
+            case XML: {
+                url += "CardInfo_test.xml";
+                break;
+            }
+        }
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Log.d(TAG, "-----Done-----");
+        return request;
+    }
+    private Request generateRequest(int requestDataType, String imagePath) {
+        Log.d(TAG, "-----generateRequest-----");
+        String url = "http://134.175.233.183/CardInfo/uploadHandler.php";
+        Request request = null;
+        if (IMG != requestDataType) {
+            Log.d(TAG,"文件类型错误!");
+        } else {
+            File file = new File(imagePath);
+            RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.getName(), image)
+                    .build();
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
+        }
+        Log.d(TAG, "-----Done-----");
+        return request;
+    }
+
+    //依据场景的response结果解析器
+    private String parseResponse(String responseData, int responseDataType) {
+        Log.d(TAG, "-----parseResponse-----");
+        String returnData = "";
+        switch (responseDataType) {
+            default: {
+                Log.d(TAG, "文件类型错误!");
+                break;
+            }
+            case JSON: {
+                returnData = "";
+                String jsonData = responseData;
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonData);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String name = jsonObject.getString("name");
+                        String version = jsonObject.getString("version");
+                        Log.d(TAG, "id: " + id);
+                        Log.d(TAG, "name: " + name);
+                        Log.d(TAG, "version: " + version);
+                        returnData += "id: "+ id + "\n";
+                        returnData += "name: "+ name + "\n";
+                        returnData += "version: "+ version + "\n\n";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case XML: {
+                returnData = "";
+                String xmlData = responseData;
+                try {
+                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    XmlPullParser xmlPullParser = factory.newPullParser();
+                    xmlPullParser.setInput(new StringReader(xmlData));
+                    int eventType = xmlPullParser.getEventType();
+                    String id = "";
+                    String name = "";
+                    String version = "";
+                    while (eventType != XmlPullParser.END_DOCUMENT) {
+                        String nodeName = xmlPullParser.getName();
+                        switch (eventType) {
+                            case XmlPullParser.START_TAG: {
+                                if ("id".equals(nodeName)) {
+                                    id = xmlPullParser.nextText();
+                                    returnData += "id: " + id + "\n";
+                                } else if ("name".equals(nodeName)) {
+                                    name = xmlPullParser.nextText();
+                                    returnData += "name: " + name + "\n";
+                                } else if ("version".equals(nodeName)) {
+                                    version = xmlPullParser.nextText();
+                                    returnData += "version: " + version + "\n\n";
+                                }
+                                break;
+                            }
+                            case XmlPullParser.END_TAG: {
+                                if ("app".equals(nodeName)) {
+                                    Log.d(TAG, "id: " + id);
+                                    Log.d(TAG, "name: " + name);
+                                    Log.d(TAG, "version: " + version);
+                                }
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                        eventType = xmlPullParser.next();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+        Log.d(TAG, "-----Done-----");
+        if ("".equals(returnData)) return "(空)";
+        return returnData;
+    }
+
+    //获取图片文件真实路径
+    private String getImgRealPath(Context context, Uri uri) {
+        Log.d(TAG, "-----getImageRealPath-----");
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String realPath = null;
+        if (null == scheme || ContentResolver.SCHEME_FILE.equals(scheme)) {
+            realPath = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{ MediaStore.Images.ImageColumns.DATA }, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        realPath = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        if (TextUtils.isEmpty(realPath)) {
+            if (null != uri) {
+                String uriString = uri.toString();
+                int index = uriString.lastIndexOf("/");
+                String imageName = uriString.substring(index);
+                File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                File file = new File(storageDir, imageName);
+                if (!file.exists()) {
+                    storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    file = new File(storageDir, imageName);
+                }
+                realPath = file.getAbsolutePath();
+            }
+        }
+        Log.d(TAG, "图片路径: " + realPath);
+        Log.d(TAG, "-----Done-----");
+        return realPath;
     }
 }

@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +34,9 @@
                 android:resource="@xml/file_paths_public"></meta-data>
         </provider>
 
-        <activity android:name=".TestModeActivity"></activity>
+        <activity
+            android:name=".TestModeActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
