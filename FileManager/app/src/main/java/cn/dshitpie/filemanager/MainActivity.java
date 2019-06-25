@@ -3,10 +3,12 @@ package cn.dshitpie.filemanager;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import cn.dshitpie.filemanager.adapter.ItemAdapter;
+import cn.dshitpie.filemanager.utils.CodeConsultant;
 import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.utils.PermissionManager;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                 intent.putExtra("nowInFile", itemAdapter.tellNowInFile());
-                startActivity(intent);
+                startActivityForResult(intent, CodeConsultant.ADD_ITEM_ACTIVITY_CODE);
             }
         });
         //初始化左侧抽屉
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        itemAdapter = new ItemAdapter(itemList);
+        itemAdapter = new ItemAdapter(this, itemList);
         recyclerView.setAdapter(itemAdapter);
         File sdCard0ChildFile[] = fileManager.getSdCard0Directory().listFiles();
         fileManager.sortByType(sdCard0ChildFile);
@@ -136,5 +139,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(resultCode) {
+            default: break;
+            case CodeConsultant.ADD_ITEM_ACTIVITY_CODE: {
+                int feedback = data.getIntExtra("feedback", 1);
+                String itemName = data.getStringExtra("itemName");
+                if (0 == feedback) {
+                    Log.d(TAG, "走到反馈内容");
+                    File childFiles[] = itemAdapter.tellNowInFile().listFiles();
+                    itemAdapter.updateItemList(childFiles);
+                    itemAdapter.setHighlightItemName(itemName);
+                    itemAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

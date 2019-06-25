@@ -30,14 +30,27 @@ public class FileManager {
         return fileList;
     }
 
-    public boolean newFileIn(File parentFile) {
-        if (!parentFile.isDirectory()) return false;
-        return false;
+    public int newFileIn(File parentDirectoryFile, String newFileName) {
+        //1: 文件已经存在, 0: 创建成功, -1: 创建失败
+        if (!parentDirectoryFile.isDirectory()) return -1;
+        File newFileFile = new File(parentDirectoryFile.getAbsolutePath() + "/" + newFileName);
+        if (newFileFile.exists()) return 1;
+        try {
+            newFileFile.createNewFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (newFileFile.exists()) return 0;
+        return -1;
     }
 
-    public boolean newDirectoryIn(File parentFile) {
-        if (!parentFile.isDirectory()) return false;
-        File newDirectoryFile = new File(parentFile.getAbsolutePath() + "/");
-        return false;
+    public int newDirectoryIn(File parentDirectoryFile, String newDirectoryName) {
+        //1: 文件夹已经存在, 0: 创建成功, -1: 创建失败
+        if (!parentDirectoryFile.isDirectory()) return -1;
+        File newDirectoryFile = new File(parentDirectoryFile.getAbsolutePath() + "/" + newDirectoryName);
+        if (newDirectoryFile.exists()) return 1;
+        newDirectoryFile.mkdirs();
+        if (newDirectoryFile.exists()) return 0;
+        return -1;
     }
 }

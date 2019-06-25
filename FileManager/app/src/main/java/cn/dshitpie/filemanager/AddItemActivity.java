@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -19,13 +15,17 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.dshitpie.filemanager.utils.CodeConsultant;
+import cn.dshitpie.filemanager.utils.EditTextWatcher;
+import cn.dshitpie.filemanager.utils.FileManager;
+
 public class AddItemActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "testapp";
     private EditText editText;
-    private Button buttonNewFile;
-    private Button buttonNewDirectory;
-    private Button buttonCancel;
+    private Button buttonNewFile, buttonNewDirectory, buttonCancel;
     private File nowInFile;
+    private EditTextWatcher editTextWatcher;
+    private FileManager fileManager;
 
     private void setActivityToDialogSize() {
         //设置Activity宽高
@@ -54,15 +54,20 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
         setActivityToDialogSize();
+
         editText = findViewById(R.id.add_item_activity_edit_text);
         showSoftInputWhenReady();
+        editTextWatcher = new EditTextWatcher(this, editText, 20);
+        editText.addTextChangedListener(editTextWatcher);
+
         buttonNewFile = findViewById(R.id.add_item_activity_btn_new_file);
         buttonNewDirectory = findViewById(R.id.add_item_activity_btn_new_directory);
         buttonCancel = findViewById(R.id.add_item_activity_btn_cancel);
-        editText.addTextChangedListener(new EditTextWatcher(editText, 20, this));
         buttonNewFile.setOnClickListener(this);
         buttonNewDirectory.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
+
+        fileManager = new FileManager();
         Intent intent = getIntent();
         nowInFile = (File) intent.getSerializableExtra("nowInFile");
     }
@@ -72,78 +77,31 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             default: break;
             case R.id.add_item_activity_btn_new_file: {
+                String editTextContent = editTextWatcher.getNowContent();
+                int result = fileManager.newFileIn(nowInFile, editTextContent);
+                if (0 == result) Toast.makeText(this, "文件创建成功", Toast.LENGTH_LONG).show();
+                else if (-1 == result) Toast.makeText(this, "文件创建失败", Toast.LENGTH_LONG).show();
+                else if (1 == result) Toast.makeText(this, "文件已存在", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra("feedback", result);
+                intent.putExtra("itemName", editTextContent);
+                setResult(CodeConsultant.ADD_ITEM_ACTIVITY_CODE, intent);
+                finish();
                 break;
             }
             case R.id.add_item_activity_btn_new_directory: {
-
-                break;
+                String editTextContent = editTextWatcher.getNowContent();
+                int result = fileManager.newDirectoryIn(nowInFile, editTextContent);
+                if (0 == result) Toast.makeText(this, "文件夹创建成功", Toast.LENGTH_LONG).show();
+                else if (-1 == result) Toast.makeText(this, "新建文件夹失败", Toast.LENGTH_LONG).show();
+                else if (1 == result) Toast.makeText(this, "文件夹已存在", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra("feedback", result);
+                intent.putExtra("itemName", editTextContent);
+                setResult(CodeConsultant.ADD_ITEM_ACTIVITY_CODE, intent);
+                finish();
             }
-            case R.id.add_item_activity_btn_cancel: {
-                break;
-            }
+            case R.id.add_item_activity_btn_cancel: finish();
         }
     }
 }
-
-class EditTextWatcher implements TextWatcher {
-    private static final String TAG = "testapp";
-
-    // 字符个数限制
-    private int limit;
-    // 编辑框控件
-    private EditText text;
-    // 上下文对象
-    private Context context;
-    // 用来记录输入字符的时候光标的位置
-    private int cursor = 0;
-    // 用来标注输入某一内容之前的编辑框中的内容的长度
-    private int before_length;
-
-    public EditTextWatcher(EditText text, int limit, Context context) {
-        this.limit = limit;
-        this.text = text;
-        this.context = context;
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        before_length = s.length();
-    }
-
-    /**
-     * s 编辑框中全部的内容 、start 编辑框中光标所在的位置（从0开始计算）、count 从手机的输入法中输入的字符个数
-     */
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        cursor = start;
-        Log.d(TAG,"此时光标的位置为" + cursor);
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        // 这里可以知道你已经输入的字数，大家可以自己根据需求来自定义文本控件实时的显示已经输入的字符个数
-        Log.d(TAG, "此时你已经输入了" + s.length());
-        // 输入内容后编辑框所有内容的总长度
-        int after_length = s.length();
-        // 如果字符添加后超过了限制的长度，那么就移除后面添加的那一部分，这个很关键
-        if (after_length > limit) {
-            // 比限制的最大数超出了多少字
-            int d_value = after_length - limit;
-            // 这时候从手机输入的字的个数
-            int d_num = after_length - before_length;
-            // 需要删除的超出部分的开始位置
-            int st = cursor + (d_num - d_value);
-            // 需要删除的超出部分的末尾位置
-            int en = cursor + d_num;
-            // 调用delete()方法将编辑框中超出部分的内容去掉
-            Editable s_new = s.delete(st, en);
-            // 给编辑框重新设置文本
-            text.setText(s_new.toString());
-            // 设置光标最后显示的位置为超出部分的开始位置，优化体验
-            text.setSelection(st);
-            // 弹出信息提示已超出字数限制
-            Toast.makeText(context, "最大字数限制为20. 您已超出最大字数限制", Toast.LENGTH_LONG).show();
-        }
-    }
-}
-
