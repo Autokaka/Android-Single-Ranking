@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--AppCompact-->
+    <color name="colorPrimary">#5677FC</color>
+    <color name="colorPrimaryDark">#5677FC</color>
+    <color name="colorAccent">#757575</color>
+    <!--RecyclerView-->
+    <color name="recyclerViewItemTextPrimary">#000000</color>
+    <!--AddItemActivity-->
+    <color name="addItemActivityPrimary">#212121</color>
+    <color name="addItemActivityBtnCancel">#FFCDD2</color>
+    <!--EditText-->
+    <color name="EditTextPrimary">#448AFF</color>
+</resources>

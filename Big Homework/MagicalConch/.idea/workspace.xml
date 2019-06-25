@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c562692-872d-4523-bafc-8f2dca18a557" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/MagicalConch.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/app/src/main/java/cn/dshitpie/habitsgalaxy/DataBase/DBHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/app/src/main/java/cn/dshitpie/habitsgalaxy/DataBase/Planet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/app/src/main/java/cn/dshitpie/habitsgalaxy/View/CustomVideoView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/app/src/main/res/drawable/planet0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../HabitsGalaxy/app/src/main/res/raw/activity_main_bg.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/AddItemActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/adapter/ItemAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/utils/AIAEditTextWatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/utils/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/utils/PermissionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/utils/SortByInitialComparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/java/cn/dshitpie/filemanager/view/RecyclerViewItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/drawable/add_item_activity_bg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/drawable/directory.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/drawable/fab_add.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/drawable/file_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/layout/activity_add_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FileManager/app/src/main/res/layout/recycler_view_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,20 +28,36 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_remind_dialog.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="14" column="8" selection-end-line="54" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="60" column="46" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/service/DeskService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="31" column="35" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="35" />
+            <state relative-caret-position="199">
+              <caret line="173" column="69" lean-forward="true" selection-start-line="173" selection-start-column="7" selection-end-line="173" selection-end-column="69" />
               <folding>
                 <element signature="class#mLocationListener#0;class#DeskService#0" />
-                <element signature="method#setLocOpt#0;class#DeskService#0" />
                 <element signature="method#requestLocation#0;class#DeskService#0" />
                 <element signature="method#setNotification#0;class#DeskService#0" />
                 <element signature="method#removeNotification#0;class#DeskService#0" />
                 <element signature="method#setMatchList#0;class#DeskService#0" />
                 <element signature="method#setLocList#0;class#DeskService#0" />
                 <element signature="method#setRemindDialog#0;class#DeskService#0" />
-                <element signature="method#onCreate#0;class#DeskService#0" />
                 <element signature="method#onStartCommand#0;class#DeskService#0" />
                 <element signature="method#onDestroy#0;class#DeskService#0" />
               </folding>
@@ -49,13 +65,18 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/controller/NoteOperator.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="104" column="82" lean-forward="true" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="82" />
+            <state relative-caret-position="682">
+              <caret line="31" column="12" selection-start-line="10" selection-start-column="4" selection-end-line="31" selection-end-column="12" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -68,11 +89,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="7" />
-    <option name="y" value="7" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="5" />
+    <option name="y" value="5" />
     <option name="width" value="1550" />
-    <option name="height" value="884" />
+    <option name="height" value="885" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -80,7 +101,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -154,12 +174,30 @@
               <item name="cn" type="462c0819:PsiDirectoryNode" />
               <item name="dshitpie" type="462c0819:PsiDirectoryNode" />
               <item name="magicalconch" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MagicalConch" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MagicalConch" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MagicalConch" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MagicalConch" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -195,11 +233,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="6" y="6" width="1240" height="707" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.3344504" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.34383377" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -218,33 +256,66 @@
       <window_info anchor="right" id="Flutter Inspector" order="2" />
       <window_info anchor="right" id="Flutter Outline" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Preview" order="5" weight="0.3297587" />
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/controller/NoteOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2068">
+          <caret line="104" column="82" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/controller/RemindHelper.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/RemindDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-992">
+          <caret line="57" column="23" lean-forward="true" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_remind_dialog.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="8" selection-end-line="54" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="12" selection-start-line="10" selection-start-column="4" selection-end-line="31" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="60" column="46" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/service/DeskService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="31" column="35" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="35" />
+        <state relative-caret-position="199">
+          <caret line="173" column="69" lean-forward="true" selection-start-line="173" selection-start-column="7" selection-end-line="173" selection-end-column="69" />
           <folding>
             <element signature="class#mLocationListener#0;class#DeskService#0" />
-            <element signature="method#setLocOpt#0;class#DeskService#0" />
             <element signature="method#requestLocation#0;class#DeskService#0" />
             <element signature="method#setNotification#0;class#DeskService#0" />
             <element signature="method#removeNotification#0;class#DeskService#0" />
             <element signature="method#setMatchList#0;class#DeskService#0" />
             <element signature="method#setLocList#0;class#DeskService#0" />
             <element signature="method#setRemindDialog#0;class#DeskService#0" />
-            <element signature="method#onCreate#0;class#DeskService#0" />
             <element signature="method#onStartCommand#0;class#DeskService#0" />
             <element signature="method#onDestroy#0;class#DeskService#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/dshitpie/magicalconch/controller/NoteOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="104" column="82" lean-forward="true" selection-start-line="104" selection-start-column="23" selection-end-line="104" selection-end-column="82" />
         </state>
       </provider>
     </entry>
