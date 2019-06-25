@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:theme="@style/ButtonDark"
             style=""
             android:text="@string/add_item_activity_btn_new_directory"/>
 
@@ -52,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:theme="@style/ButtonPink"
             style=""
-            android:backgroundTint="@color/addItemActivityBtnCancel"
             android:text="@string/add_item_activity_btn_cancel"/>
 
         <Button
@@ -61,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:theme="@style/ButtonDark"
             style=""
             android:text="@string/add_item_activity_btn_new_file"/>
 

@@ -19,4 +19,15 @@
     <string name="add_item_activity_btn_cancel">取消</string>
     <string name="add_item_activity_btn_new_file">文件</string>
     <string name="add_item_activity_btn_new_directory">文件夹</string>
+
+    <string name="menu_activity_btn_copy">复制</string>
+    <string name="menu_activity_btn_shear">剪切</string>
+    <string name="menu_activity_btn_link">链接</string>
+    <string name="menu_activity_btn_rename">重命名</string>
+    <string name="menu_activity_btn_delete">删除</string>
+    <string name="menu_activity_btn_compress">压缩</string>
+    <string name="menu_activity_btn_attribute">属性</string>
+    <string name="menu_activity_btn_share">分享</string>
+    <string name="menu_activity_btn_openas">打开方式</string>
+    <string name="menu_activity_btn_bookmark">添加书签</string>
 </resources>

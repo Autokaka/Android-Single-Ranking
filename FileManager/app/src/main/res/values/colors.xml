@@ -8,7 +8,18 @@
     <color name="recyclerViewItemTextPrimary">#000000</color>
     <!--AddItemActivity-->
     <color name="addItemActivityPrimary">#212121</color>
-    <color name="addItemActivityBtnCancel">#FFCDD2</color>
     <!--EditText-->
-    <color name="EditTextPrimary">#448AFF</color>
+    <color name="editTextPrimary">#5677FC</color>
+    <!--ButtonLight-->
+    <color name="btnLightBackgroundTint">#FFFFFF</color>
+    <color name="btnLightRippleColor">#265677FC</color>
+    <color name="btnLightTextColor">#212121</color>
+    <!--ButtonDark-->
+    <color name="btnDarkBackgroundTint">#757575</color>
+    <color name="btnDarkRippleColor">#212121</color>
+    <color name="btnDarkTextColor">#FFFFFF</color>
+    <!--ButtonPink-->
+    <color name="btnPinkBackgroundTint">#FFCDD2</color>
+    <color name="btnPinkRippleColor">#FFFFFF</color>
+    <color name="btnPinkTextColor">#FFFFFF</color>
 </resources>

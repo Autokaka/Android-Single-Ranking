@@ -1,6 +1,8 @@
 package cn.dshitpie.filemanager.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -17,7 +19,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import cn.dshitpie.filemanager.MenuActivity;
 import cn.dshitpie.filemanager.R;
+import cn.dshitpie.filemanager.utils.CodeConsultant;
 import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
@@ -130,6 +134,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +144,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 File childFile[] = clickedItemFile.listFiles();
                 updateItemList(childFile);
                 notifyDataSetChanged();
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(context, MenuActivity.class);
+                intent.putExtra("nowInFile", tellNowInFile());
+                ((Activity) context).startActivityForResult(intent, CodeConsultant.MENU_ACTIVITY_CODE);
+                return true;
             }
         });
         return holder;

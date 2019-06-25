@@ -14,8 +14,8 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
-    <!--AddItemActivity添加新文件/文件夹页面主题-->
-    <style name="AddItemActivity" parent="Base.Theme.AppCompat.Dialog">
+    <!--自定义Dialog样式的Activity-->
+    <style name="DialogActivity" parent="Base.Theme.AppCompat.Dialog">
         <!--设置没有ActionBar-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -39,8 +39,29 @@
 
     <!--EditText主题-->
     <style name="EditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/EditTextPrimary</item>
-        <item name="colorControlActivated">@color/EditTextPrimary</item>
+        <item name="colorControlNormal">@color/editTextPrimary</item>
+        <item name="colorControlActivated">@color/editTextPrimary</item>
+    </style>
+
+    <!--ButtonDark-->
+    <style name="ButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/btnDarkRippleColor</item>
+        <item name="colorButtonNormal">@color/btnDarkBackgroundTint</item>
+        <item name="android:textColor">@color/btnDarkTextColor</item>
+    </style>
+
+    <!--ButtonLight-->
+    <style name="ButtonLight" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/btnLightRippleColor</item>
+        <item name="colorButtonNormal">@color/btnLightBackgroundTint</item>
+        <item name="android:textColor">@color/btnLightTextColor</item>
+    </style>
+
+    <!--ButtonPink-->
+    <style name="ButtonPink" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/btnPinkRippleColor</item>
+        <item name="colorButtonNormal">@color/btnPinkBackgroundTint</item>
+        <item name="android:textColor">@color/btnPinkTextColor</item>
     </style>
 
 </resources>

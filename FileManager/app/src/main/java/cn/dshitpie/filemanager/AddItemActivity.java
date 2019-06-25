@@ -27,11 +27,11 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     private EditTextWatcher editTextWatcher;
     private FileManager fileManager;
 
-    private void setActivityToDialogSize() {
+    private void setActivitySize(double heightScale, double widthScale) {
         //设置Activity宽高
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.height = (int) (getWindowManager().getDefaultDisplay().getHeight() * 0.2); // 高度设置为屏幕的0.3
-        params.width = (int) (getWindowManager().getDefaultDisplay().getWidth() * 0.65); // 宽度设置为屏幕的0.65
+        params.height = (int) (getWindowManager().getDefaultDisplay().getHeight() * heightScale); // 高度设置为屏幕的0.3
+        params.width = (int) (getWindowManager().getDefaultDisplay().getWidth() * widthScale); // 宽度设置为屏幕的0.65
         getWindow().setAttributes(params);
     }
 
@@ -53,7 +53,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-        setActivityToDialogSize();
+        setActivitySize(0.2, 0.7);
 
         editText = findViewById(R.id.add_item_activity_edit_text);
         showSoftInputWhenReady();

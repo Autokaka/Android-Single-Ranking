@@ -17,7 +17,7 @@ public class SortByInitialComparator implements Comparator {
         else if (leftName.charAt(0) == rightName.toLowerCase().charAt(0)) return 1;
         else if (leftName.charAt(0) == rightName.charAt(0)) {
             String subLeftName = leftName.substring(1), subRightName = rightName.substring(1);
-            Log.d(TAG, "左侧: " + subLeftName + " 右侧: " + subRightName);
+//            Log.d(TAG, "左侧: " + subLeftName + " 右侧: " + subRightName);
             if ("".equals(subLeftName) && !"".equals(subRightName)) return -1;
             else if ("".equals(subRightName) && !"".equals(subLeftName)) return 1;
             return subCompare(subLeftName, subRightName);
@@ -32,7 +32,7 @@ public class SortByInitialComparator implements Comparator {
         else if (leftName.charAt(0) == rightName.toLowerCase().charAt(0)) return 1;
         else if (leftName.charAt(0) == rightName.charAt(0)) {
             String subLeftName = leftName.substring(1), subRightName = rightName.substring(1);
-            Log.d(TAG, "左侧: " + subLeftName + " 右侧: " + subRightName);
+//            Log.d(TAG, "左侧: " + subLeftName + " 右侧: " + subRightName);
             if ("".equals(subLeftName) && !"".equals(subRightName)) return -1;
             else if ("".equals(subRightName) && !"".equals(subLeftName)) return 1;
             return subCompare(subLeftName, subRightName);
