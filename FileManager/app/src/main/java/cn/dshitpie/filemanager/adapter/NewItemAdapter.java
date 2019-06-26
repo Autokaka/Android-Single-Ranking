@@ -4,16 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import cn.dshitpie.filemanager.R;
@@ -21,38 +19,15 @@ import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.utils.TagConsultant;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+public class NewItemAdapter extends BaseQuickAdapter<RecyclerViewItem, BaseViewHolder> {
     FileManager fileManager;
     private ArrayList<RecyclerViewItem> itemList;
     private ArrayList<Integer> highlightItemNameList;
     private Context context;
     private Stack<File> accessRoute;
-    private RecyclerViewInterface recyclerViewInterface;
 
-    public ItemAdapter(Context context, ArrayList<RecyclerViewItem> recyclerViewItemList) {
-        this.context = context;
-        fileManager = new FileManager();
-        itemList = recyclerViewItemList;
-        highlightItemNameList = new ArrayList<>();
-        accessRoute = new Stack<>();
-    }
-
-    public void setRecyclerViewListner(RecyclerViewInterface recyclerViewInterface) {
-        this.recyclerViewInterface = recyclerViewInterface;
-    }
-
-    //创建视图层关联
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        View itemView;
-        ImageView itemImage;
-        TextView itemName;
-
-        public ViewHolder(View view) {
-            super(view);
-            itemView = view;
-            itemImage = (ImageView) view.findViewById(R.id.image_view_file_type_img);
-            itemName = (TextView) view.findViewById(R.id.item_name);
-        }
+    public NewItemAdapter(int layoutResId, List data) {
+        super(layoutResId, data);
     }
 
     //列表返回功能
@@ -75,26 +50,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public File tellNowInFile() {
         if (accessRoute.isEmpty()) return fileManager.getSdCard0Directory();
         return accessRoute.peek();
-    }
-
-    //绑定视图层和数据层
-    @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        RecyclerViewItem item = itemList.get(position);
-        holder.itemImage.setImageResource(item.getImageId());
-        holder.itemName.setText(item.getItemName());
-        //此处必须重新设置初始颜色和文字粗细, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
-        holder.itemName.setTextColor(ContextCompat.getColor(context, R.color.recyclerViewItemTextPrimary));
-        holder.itemName.setTypeface(Typeface.DEFAULT);
-        if (!highlightItemNameList.isEmpty()) {
-            for (int i = 0; i < highlightItemNameList.size(); i++) {
-                int highlightIndex = highlightItemNameList.get(i);
-                if (position == highlightIndex) {
-                    holder.itemName.setTextColor(Color.BLUE);
-                    holder.itemName.setTypeface(Typeface.DEFAULT_BOLD);
-                }
-            }
-        }
     }
 
     public void updateItemList(File fileList[]) {
@@ -151,30 +106,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Log.d(TagConsultant.TAG, "-----addToAccessRoute(Done)-----");
     }
 
-    //渲染视图
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
-        //为防止内存泄漏, 采用接口回调方案
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != recyclerViewInterface) recyclerViewInterface.onItemClick(v, holder.getAdapterPosition());
+    protected void convert(BaseViewHolder helper, RecyclerViewItem item) {
+        helper.setImageResource(R.id.image_view_file_type_img, item.getImageId());
+        helper.setText(R.id.item_name, item.getItemName());
+        //此处必须重新设置初始颜色和文字粗细, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
+        helper.setTextColor(R.id.item_name, ContextCompat.getColor(context, R.color.recyclerViewItemTextPrimary));
+        helper.setTypeface(Typeface.DEFAULT);
+        if (!highlightItemNameList.isEmpty()) {
+            for (int i = 0; i < highlightItemNameList.size(); i++) {
+                int highlightIndex = highlightItemNameList.get(i);
+                if (helper.getLayoutPosition() == highlightIndex) {
+                    helper.setTextColor(R.id.item_name, Color.BLUE);
+                    helper.setTypeface(Typeface.DEFAULT_BOLD);
+                }
             }
-        });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (null != recyclerViewInterface) recyclerViewInterface.onItemLongPress(v, holder.getAdapterPosition());
-                return true;
-            }
-        });
-        return holder;
-    }
-
-    @Override
-    public int getItemCount() {
-        return itemList.size();
+        }
     }
 }

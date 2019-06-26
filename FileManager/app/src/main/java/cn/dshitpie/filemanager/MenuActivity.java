@@ -87,7 +87,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 else if (CodeConsultant.FILE_NOT_EXISTS == result) Toast.makeText(this, "文件不存在", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra(TagConsultant.FEEDBACK, result);
-                setResult(CodeConsultant.MENU_ACTIVITY, intent);
+                setResult(CodeConsultant.MENU_ACTIVITY_DELETE, intent);
                 finish();
                 break;
             }
@@ -115,6 +115,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         switch(resultCode) {
             default: break;
             case CodeConsultant.RENAME_ACTIVITY: {
+                int feedback = data.getIntExtra(TagConsultant.FEEDBACK, CodeConsultant.OPERATE_SUCCESS);
+                String itemName = data.getStringExtra(TagConsultant.ITEM_NAME);
+                if (CodeConsultant.OPERATE_SUCCESS == feedback) {
+                    Intent intent = new Intent();
+                    intent.putExtra(TagConsultant.FEEDBACK, feedback);
+                    intent.putExtra(TagConsultant.ITEM_NAME, itemName);
+                    setResult(CodeConsultant.MENU_ACTIVITY_RENAME, intent);
+                    finish();
+                }
                 break;
             }
         }

@@ -62,7 +62,7 @@ public class EditTextWatcher implements TextWatcher {
     }
 
     public String getNowContent() {
-        if (null == nowContent) return "新建文件(夹)";
+        if (null == nowContent || "".equals(nowContent)) return TagConsultant.FILE_DEFAULT_NAME;
         return nowContent.toString();
     }
 }

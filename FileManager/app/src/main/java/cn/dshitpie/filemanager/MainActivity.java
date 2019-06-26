@@ -9,18 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
-import com.scwang.smartrefresh.header.BezierCircleHeader;
-import com.scwang.smartrefresh.header.WaterDropHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -30,23 +27,18 @@ import java.util.ArrayList;
 import cn.dshitpie.filemanager.adapter.ItemAdapter;
 import cn.dshitpie.filemanager.adapter.RecyclerViewInterface;
 import cn.dshitpie.filemanager.utils.CodeConsultant;
-import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.utils.PermissionManager;
 import cn.dshitpie.filemanager.utils.TagConsultant;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private PermissionManager permissionManager;
-    private FileManager fileManager;
     ItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //初始化导航栏
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         //初始化悬浮按钮
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,14 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //初始化左侧抽屉
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        //初始化文件工具类
-        fileManager = new FileManager();
+        //初始化搜索栏
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        FloatingSearchView floatingSearchView = findViewById(R.id.main_activity_floating_search_view);
+        floatingSearchView.attachNavigationDrawerToMenuButton(drawerLayout);
         //初始化权限申请工具类并申请权限
         permissionManager = new PermissionManager();
         permissionManager.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -100,8 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //初始化RefreshLayout
         RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-        refreshLayout.setRefreshHeader(new WaterDropHeader(this));
-        refreshLayout.setDragRate(0.8f);
+        refreshLayout.setRefreshHeader(new TaurusHeader(this));
+        refreshLayout.setDragRate(0.7f);
+        refreshLayout.setHeaderHeight(70);
         refreshLayout.setEnableOverScrollBounce(true);
         refreshLayout.setDisableContentWhenRefresh(true);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -184,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             }
-            case CodeConsultant.MENU_ACTIVITY: {
+            case CodeConsultant.MENU_ACTIVITY_DELETE: {
                 int feedback = data.getIntExtra(TagConsultant.FEEDBACK, CodeConsultant.OPERATE_SUCCESS);
                 if (CodeConsultant.OPERATE_SUCCESS == feedback) {
                     File childFiles[] = itemAdapter.tellNowInFile().listFiles();
@@ -192,6 +183,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     itemAdapter.notifyDataSetChanged();
                 }
                 break;
+            }
+            case CodeConsultant.MENU_ACTIVITY_RENAME: {
+                int feedback = data.getIntExtra(TagConsultant.FEEDBACK, CodeConsultant.OPERATE_SUCCESS);
+                String itemName = data.getStringExtra(TagConsultant.ITEM_NAME);
+                if (CodeConsultant.OPERATE_SUCCESS == feedback) {
+                    File childFiles[] = itemAdapter.tellNowInFile().listFiles();
+                    itemAdapter.updateItemList(childFiles);
+                    itemAdapter.setHighlightItemName(itemName);
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

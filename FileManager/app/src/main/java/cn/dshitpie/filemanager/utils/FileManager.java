@@ -79,7 +79,15 @@ public class FileManager {
         else return CodeConsultant.OPERATE_FAIL;
     }
 
-    private void rename(File file) {
-        
+    public int rename(File file, String newName) {
+        if (!file.exists()) return CodeConsultant.FILE_NOT_EXISTS;
+        else if (newName.equals(file.getName())) return CodeConsultant.OPERATE_FAIL;
+        else if (newName.equals(TagConsultant.FILE_DEFAULT_NAME)) return CodeConsultant.OPERATE_FAIL;
+        else {
+            String parentFilePath = file.getParent();
+            File newFile = new File(parentFilePath + "/" + newName);
+            if (file.renameTo(newFile)) return CodeConsultant.OPERATE_SUCCESS;
+            else return CodeConsultant.OPERATE_FAIL;
+        }
     }
 }
