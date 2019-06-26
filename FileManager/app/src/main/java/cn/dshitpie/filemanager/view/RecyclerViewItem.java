@@ -3,7 +3,6 @@ package cn.dshitpie.filemanager.view;
 import java.io.File;
 
 public class RecyclerViewItem {
-    private static final String TAG = "testapp";
     private String itemName;
     private int imageId;
     private File itemFile;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/add_item_activity_bg"
+    android:orientation="vertical">
+
+    <!--上方标题和输入框-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_activity_btn_rename"
+            android:textColor="@color/addItemActivityPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/rename_activity_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:theme="@style/EditText"
+            android:textColor="@color/addItemActivityPrimary"
+            android:autofillHints="@string/add_item_activity_autofill_hint"
+            android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+
+    <!--下方两个按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rename_activity_btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/ButtonDark"
+            style=""
+            android:text="@string/btn_confirm"/>
+
+        <Button
+            android:id="@+id/rename_activity_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/ButtonPink"
+            style=""
+            android:text="@string/add_item_activity_btn_cancel"/>
+
+    </LinearLayout>
+
+</LinearLayout>

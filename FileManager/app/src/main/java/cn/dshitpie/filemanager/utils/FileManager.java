@@ -1,6 +1,7 @@
 package cn.dshitpie.filemanager.utils;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class FileManager {
-    private static final String TAG = "testapp";
 
     public File getSdCard0Directory() {
         return Environment.getExternalStorageDirectory();
@@ -30,27 +30,56 @@ public class FileManager {
         return fileList;
     }
 
-    public int newFileIn(File parentDirectoryFile, String newFileName) {
-        //1: 文件已经存在, 0: 创建成功, -1: 创建失败
-        if (!parentDirectoryFile.isDirectory()) return -1;
-        File newFileFile = new File(parentDirectoryFile.getAbsolutePath() + "/" + newFileName);
-        if (newFileFile.exists()) return 1;
+    public int newFileIn(File parentDirFile, String newFileName) {
+        if (!parentDirFile.isDirectory()) return CodeConsultant.OPERATE_FAIL;
+        File newFileFile = new File(parentDirFile.getAbsolutePath() + "/" + newFileName);
+        if (newFileFile.exists()) return CodeConsultant.FILE_ALREADY_EXISTS;
         try {
             newFileFile.createNewFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (newFileFile.exists()) return 0;
-        return -1;
+        if (newFileFile.exists()) return CodeConsultant.OPERATE_SUCCESS;
+        return CodeConsultant.OPERATE_FAIL;
     }
 
-    public int newDirectoryIn(File parentDirectoryFile, String newDirectoryName) {
-        //1: 文件夹已经存在, 0: 创建成功, -1: 创建失败
-        if (!parentDirectoryFile.isDirectory()) return -1;
-        File newDirectoryFile = new File(parentDirectoryFile.getAbsolutePath() + "/" + newDirectoryName);
-        if (newDirectoryFile.exists()) return 1;
+    public int newDirIn(File parentDirFile, String newDirectoryName) {
+        if (!parentDirFile.isDirectory()) return CodeConsultant.OPERATE_FAIL;
+        File newDirectoryFile = new File(parentDirFile.getAbsolutePath() + "/" + newDirectoryName);
+        if (newDirectoryFile.exists()) return CodeConsultant.FILE_ALREADY_EXISTS;
         newDirectoryFile.mkdirs();
-        if (newDirectoryFile.exists()) return 0;
-        return -1;
+        if (newDirectoryFile.exists()) return CodeConsultant.OPERATE_SUCCESS;
+        return CodeConsultant.OPERATE_FAIL;
+    }
+
+    public int delete(File file) {
+        if (!file.exists()) return CodeConsultant.FILE_NOT_EXISTS;
+        else if (file.isFile()) {
+            deleteFileSafely(file);
+            return CodeConsultant.OPERATE_SUCCESS;
+        } else if (file.isDirectory()) {
+            File[] childFiles = file.listFiles();
+            int delChildResult = CodeConsultant.OPERATE_SUCCESS;
+            if (!(null == childFiles || 0 == childFiles.length)) {
+                for (int i = 0; i < childFiles.length; i++) {
+                    delChildResult = delete(childFiles[i]);
+                }
+            }
+            if (CodeConsultant.OPERATE_SUCCESS != delChildResult) return delChildResult;
+        }
+        return deleteFileSafely(file);
+    }
+
+    private int deleteFileSafely(File file) {
+        if (null == file) return CodeConsultant.OPERATE_FAIL;
+        String tmpPath = file.getParent() + File.separator + System.currentTimeMillis();
+        File tmp = new File(tmpPath);
+        file.renameTo(tmp);
+        if (tmp.delete()) return CodeConsultant.OPERATE_SUCCESS;
+        else return CodeConsultant.OPERATE_FAIL;
+    }
+
+    private void rename(File file) {
+        
     }
 }

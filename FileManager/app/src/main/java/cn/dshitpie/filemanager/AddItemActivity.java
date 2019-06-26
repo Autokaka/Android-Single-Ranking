@@ -18,9 +18,9 @@ import java.util.TimerTask;
 import cn.dshitpie.filemanager.utils.CodeConsultant;
 import cn.dshitpie.filemanager.utils.EditTextWatcher;
 import cn.dshitpie.filemanager.utils.FileManager;
+import cn.dshitpie.filemanager.utils.TagConsultant;
 
 public class AddItemActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "testapp";
     private EditText editText;
     private Button buttonNewFile, buttonNewDirectory, buttonCancel;
     private File nowInFile;
@@ -69,7 +69,23 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
 
         fileManager = new FileManager();
         Intent intent = getIntent();
-        nowInFile = (File) intent.getSerializableExtra("nowInFile");
+        nowInFile = (File) intent.getSerializableExtra(TagConsultant.NOW_IN_FILE);
+    }
+
+    //统一的按钮点击事件处理方法
+    private void dealOnClick(int fileType) {
+        String editTextContent = editTextWatcher.getNowContent();
+        int result = -1;
+        if (CodeConsultant.TYPE_FILE == fileType) result = fileManager.newFileIn(nowInFile, editTextContent);
+        else if (CodeConsultant.TYPE_DIRECTORY == fileType) result = fileManager.newDirIn(nowInFile, editTextContent);
+
+        if (CodeConsultant.OPERATE_SUCCESS == result) Toast.makeText(this, "创建成功", Toast.LENGTH_LONG).show();
+        else if (CodeConsultant.OPERATE_FAIL == result) Toast.makeText(this, "创建失败", Toast.LENGTH_LONG).show();
+        else if (CodeConsultant.FILE_ALREADY_EXISTS == result) Toast.makeText(this, "文件已存在", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        intent.putExtra(TagConsultant.FEEDBACK, result);
+        intent.putExtra(TagConsultant.ITEM_NAME, editTextContent);
+        setResult(CodeConsultant.ADD_ITEM_ACTIVITY, intent);
     }
 
     @Override
@@ -77,28 +93,12 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             default: break;
             case R.id.add_item_activity_btn_new_file: {
-                String editTextContent = editTextWatcher.getNowContent();
-                int result = fileManager.newFileIn(nowInFile, editTextContent);
-                if (0 == result) Toast.makeText(this, "文件创建成功", Toast.LENGTH_LONG).show();
-                else if (-1 == result) Toast.makeText(this, "文件创建失败", Toast.LENGTH_LONG).show();
-                else if (1 == result) Toast.makeText(this, "文件已存在", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.putExtra("feedback", result);
-                intent.putExtra("itemName", editTextContent);
-                setResult(CodeConsultant.ADD_ITEM_ACTIVITY_CODE, intent);
+                dealOnClick(CodeConsultant.TYPE_FILE);
                 finish();
                 break;
             }
             case R.id.add_item_activity_btn_new_directory: {
-                String editTextContent = editTextWatcher.getNowContent();
-                int result = fileManager.newDirectoryIn(nowInFile, editTextContent);
-                if (0 == result) Toast.makeText(this, "文件夹创建成功", Toast.LENGTH_LONG).show();
-                else if (-1 == result) Toast.makeText(this, "新建文件夹失败", Toast.LENGTH_LONG).show();
-                else if (1 == result) Toast.makeText(this, "文件夹已存在", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.putExtra("feedback", result);
-                intent.putExtra("itemName", editTextContent);
-                setResult(CodeConsultant.ADD_ITEM_ACTIVITY_CODE, intent);
+                dealOnClick(CodeConsultant.TYPE_DIRECTORY);
                 finish();
             }
             case R.id.add_item_activity_btn_cancel: finish();

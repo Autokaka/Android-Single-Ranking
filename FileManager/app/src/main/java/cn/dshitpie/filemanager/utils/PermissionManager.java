@@ -10,7 +10,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class PermissionManager extends AppCompatActivity {
-    private static final String TAG = "testapp";
     private ArrayList<String> permissionList;
 
     public PermissionManager() {

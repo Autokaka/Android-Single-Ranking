@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".RenameActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/DialogActivity"/>
+        <activity
             android:name=".MenuActivity"
             android:launchMode="singleTask"
             android:theme="@style/DialogActivity" />

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +22,16 @@ import cn.dshitpie.filemanager.MenuActivity;
 import cn.dshitpie.filemanager.R;
 import cn.dshitpie.filemanager.utils.CodeConsultant;
 import cn.dshitpie.filemanager.utils.FileManager;
+import cn.dshitpie.filemanager.utils.TagConsultant;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private static final String TAG = "testapp";
     FileManager fileManager;
     private ArrayList<RecyclerViewItem> itemList;
-    ArrayList<Integer> highlightItemNameList;
-    private Stack<File> accessRoute;
+    private ArrayList<Integer> highlightItemNameList;
     private Context context;
+    private Stack<File> accessRoute;
+    private RecyclerViewInterface recyclerViewInterface;
 
     public ItemAdapter(Context context, ArrayList<RecyclerViewItem> recyclerViewItemList) {
         this.context = context;
@@ -39,6 +39,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         itemList = recyclerViewItemList;
         highlightItemNameList = new ArrayList<>();
         accessRoute = new Stack<>();
+    }
+
+    public void setRecyclerViewListner(RecyclerViewInterface recyclerViewInterface) {
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     //创建视图层关联
@@ -57,10 +61,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     //列表返回功能
     public boolean back() {
-        if (accessRoute.isEmpty()) return false;
+        Log.d(TagConsultant.TAG, "-----back-----");
+        if (accessRoute.isEmpty()) {
+            Log.d(TagConsultant.TAG, "已到达根目录, 程序退出");
+            Log.d(TagConsultant.TAG, "-----back(Done)-----");
+            return false;
+        }
         File parentFile[] = accessRoute.pop().getParentFile().listFiles();
         updateItemList(parentFile);
         notifyDataSetChanged();
+        Log.d(TagConsultant.TAG, "当前访问路径反馈: " + accessRoute);
+        Log.d(TagConsultant.TAG, "-----back(Done)-----");
         return true;
     }
 
@@ -76,7 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         RecyclerViewItem item = itemList.get(position);
         holder.itemImage.setImageResource(item.getImageId());
         holder.itemName.setText(item.getItemName());
-        //此处必须重新设置初始颜色, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
+        //此处必须重新设置初始颜色和文字粗细, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
         holder.itemName.setTextColor(ContextCompat.getColor(context, R.color.recyclerViewItemTextPrimary));
         holder.itemName.setTypeface(Typeface.DEFAULT);
         if (!highlightItemNameList.isEmpty()) {
@@ -91,7 +102,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     public void updateItemList(File fileList[]) {
-        Log.d(TAG, "-----updateItemList-----");
+        Log.d(TagConsultant.TAG, "-----updateItemList-----");
         itemList.clear();
         highlightItemNameList.clear();
         //排序
@@ -105,7 +116,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             addItem = new RecyclerViewItem(addImageId, fileList[i].getName(), fileList[i]);
             itemList.add(addItem);
         }
-        Log.d(TAG, "-----updateItemList(Done)-----");
+        Log.d(TagConsultant.TAG, "-----updateItemList(Done)-----");
+    }
+
+    public ArrayList<RecyclerViewItem> getItemList() {
+        return itemList;
+    }
+
+    public void addToItemList(RecyclerViewItem addItem) {
+        itemList.add(addItem);
     }
 
     private int indexOfItemName(String itemName) {
@@ -129,29 +148,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
     }
 
+    public void addToAccessRoute(File addFile) {
+        Log.d(TagConsultant.TAG, "-----addToAccessRoute-----");
+        accessRoute.push(addFile);
+        Log.d(TagConsultant.TAG, "当前访问路径反馈: " + accessRoute);
+        Log.d(TagConsultant.TAG, "-----addToAccessRoute(Done)-----");
+    }
+
     //渲染视图
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-
+        //为防止内存泄漏, 采用接口回调方案
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                File clickedItemFile = itemList.get(position).getItemFile();
-                accessRoute.push(clickedItemFile);
-                File childFile[] = clickedItemFile.listFiles();
-                updateItemList(childFile);
-                notifyDataSetChanged();
+                if (null != recyclerViewInterface) recyclerViewInterface.onItemClick(v, holder.getAdapterPosition());
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent = new Intent(context, MenuActivity.class);
-                intent.putExtra("nowInFile", tellNowInFile());
-                ((Activity) context).startActivityForResult(intent, CodeConsultant.MENU_ACTIVITY_CODE);
+                if (null != recyclerViewInterface) recyclerViewInterface.onItemLongPress(v, holder.getAdapterPosition());
                 return true;
             }
         });

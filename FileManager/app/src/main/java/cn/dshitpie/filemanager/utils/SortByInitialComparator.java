@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.Comparator;
 
 public class SortByInitialComparator implements Comparator {
-    private static final String TAG = "testapp";
     @Override
     public int compare(Object o1, Object o2) {
         File left = (File) o1, right = (File) o2;

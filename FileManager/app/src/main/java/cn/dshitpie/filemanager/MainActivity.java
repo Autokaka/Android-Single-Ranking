@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,21 +18,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.scwang.smartrefresh.header.BezierCircleHeader;
+import com.scwang.smartrefresh.header.WaterDropHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Stack;
 
 import cn.dshitpie.filemanager.adapter.ItemAdapter;
+import cn.dshitpie.filemanager.adapter.RecyclerViewInterface;
 import cn.dshitpie.filemanager.utils.CodeConsultant;
 import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.utils.PermissionManager;
+import cn.dshitpie.filemanager.utils.TagConsultant;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "testapp";
     private PermissionManager permissionManager;
     private FileManager fileManager;
-    private ArrayList<RecyclerViewItem> itemList;
     ItemAdapter itemAdapter;
 
     @Override
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                 intent.putExtra("nowInFile", itemAdapter.tellNowInFile());
-                startActivityForResult(intent, CodeConsultant.ADD_ITEM_ACTIVITY_CODE);
+                startActivityForResult(intent, CodeConsultant.ADD_ITEM_ACTIVITY);
             }
         });
         //初始化左侧抽屉
@@ -69,22 +72,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         permissionManager.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         permissionManager.request(MainActivity.this);
         //初始化RecyclerView
-        itemList = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        itemAdapter = new ItemAdapter(this, itemList);
+        itemAdapter = new ItemAdapter(this, new ArrayList<RecyclerViewItem>());
         recyclerView.setAdapter(itemAdapter);
-        File sdCard0ChildFile[] = fileManager.getSdCard0Directory().listFiles();
-        fileManager.sortByType(sdCard0ChildFile);
-        RecyclerViewItem addItem = null;
-        int addImageId = 0;
-        for (int i = 0; i < sdCard0ChildFile.length; i++) {
-            if (sdCard0ChildFile[i].isDirectory()) addImageId = R.drawable.directory;
-            else addImageId = R.drawable.file_normal;
-            addItem = new RecyclerViewItem(addImageId, sdCard0ChildFile[i].getName(), sdCard0ChildFile[i]);
-            itemList.add(addItem);
-        }
+        itemAdapter.setRecyclerViewListner(new RecyclerViewInterface() {
+            @Override
+            public void onItemClick(View v, int position) {
+                File clickedItemFile = itemAdapter.getItemList().get(position).getItemFile();
+                itemAdapter.addToAccessRoute(clickedItemFile);
+                File childFile[] = clickedItemFile.listFiles();
+                itemAdapter.updateItemList(childFile);
+                itemAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onItemLongPress(View v, int position) {
+                File nowSelectFile = itemAdapter.getItemList().get(position).getItemFile();
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra(TagConsultant.NOW_SELECT_FILE, nowSelectFile);
+                startActivityForResult(intent, CodeConsultant.MENU_ACTIVITY);
+            }
+        });
+        itemAdapter.updateItemList(itemAdapter.tellNowInFile().listFiles());
+        itemAdapter.notifyDataSetChanged();
+        //初始化RefreshLayout
+        RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        refreshLayout.setRefreshHeader(new WaterDropHeader(this));
+        refreshLayout.setDragRate(0.8f);
+        refreshLayout.setEnableOverScrollBounce(true);
+        refreshLayout.setDisableContentWhenRefresh(true);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                itemAdapter.updateItemList(itemAdapter.tellNowInFile().listFiles());
+                itemAdapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh(0);
+            }
+        });
     }
 
     @Override
@@ -146,16 +173,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
         switch(resultCode) {
             default: break;
-            case CodeConsultant.ADD_ITEM_ACTIVITY_CODE: {
-                int feedback = data.getIntExtra("feedback", 1);
-                String itemName = data.getStringExtra("itemName");
-                if (0 == feedback) {
-                    Log.d(TAG, "走到反馈内容");
+            case CodeConsultant.ADD_ITEM_ACTIVITY: {
+                int feedback = data.getIntExtra(TagConsultant.FEEDBACK, CodeConsultant.OPERATE_SUCCESS);
+                String itemName = data.getStringExtra(TagConsultant.ITEM_NAME);
+                if (CodeConsultant.OPERATE_SUCCESS == feedback) {
                     File childFiles[] = itemAdapter.tellNowInFile().listFiles();
                     itemAdapter.updateItemList(childFiles);
                     itemAdapter.setHighlightItemName(itemName);
                     itemAdapter.notifyDataSetChanged();
                 }
+                break;
+            }
+            case CodeConsultant.MENU_ACTIVITY: {
+                int feedback = data.getIntExtra(TagConsultant.FEEDBACK, CodeConsultant.OPERATE_SUCCESS);
+                if (CodeConsultant.OPERATE_SUCCESS == feedback) {
+                    File childFiles[] = itemAdapter.tellNowInFile().listFiles();
+                    itemAdapter.updateItemList(childFiles);
+                    itemAdapter.notifyDataSetChanged();
+                }
+                break;
             }
         }
     }

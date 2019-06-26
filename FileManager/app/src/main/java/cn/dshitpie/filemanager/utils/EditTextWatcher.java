@@ -12,7 +12,6 @@ import android.widget.Toast;
  * 监控EditText输入情况, 并返回输入结果
  **/
 public class EditTextWatcher implements TextWatcher {
-    private static final String TAG = "testapp";
     private int cursor, editTextLimitLength, beforeLength;
     private Context context;
     private EditText editText;
@@ -33,14 +32,14 @@ public class EditTextWatcher implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence content, int start, int before, int count) {
         cursor = start;
-        Log.d(TAG,"此时光标的位置为" + cursor);
+        Log.d(TagConsultant.TAG,"此时光标的位置为" + cursor);
     }
 
     @Override
     public void afterTextChanged(Editable content) {
         nowContent = content;
         // 这里可以知道你已经输入的字数，大家可以自己根据需求来自定义文本控件实时的显示已经输入的字符个数
-        Log.d(TAG, "你已经输入了 " + nowContent.length() + " 个字");
+        Log.d(TagConsultant.TAG, "你已经输入了 " + nowContent.length() + " 个字");
         // 输入内容后编辑框所有内容的总长度
         int afterLength = nowContent.length();
         if (afterLength <= editTextLimitLength) return;
