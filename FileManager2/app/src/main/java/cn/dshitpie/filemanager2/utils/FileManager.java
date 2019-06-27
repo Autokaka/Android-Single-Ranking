@@ -1,19 +1,45 @@
-package cn.dshitpie.filemanager.utils;
+package cn.dshitpie.filemanager2.utils;
 
 import android.content.Context;
 import android.os.Environment;
 import android.text.format.Formatter;
 import android.util.Log;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.List;
+
+import cn.dshitpie.filemanager2.R;
+import cn.dshitpie.filemanager2.model.Item;
 
 public class FileManager {
 
     public static File getSdCard0Directory() {
         return Environment.getExternalStorageDirectory();
+    }
+
+    public static Item convertToItem(File file) {
+        int imgResId;
+        if (file.isFile()) imgResId = R.drawable.type_file;
+        else imgResId = R.drawable.type_dir;
+        return (new Item(imgResId, file.getName(), file));
+    }
+
+    public static List<Item> convertToItemList(File files[]) {
+        if (null == files || 0 == files.length) return null;
+        files = sortByType(files);
+        int imgResId;
+        List<Item> itemList = new ArrayList<>();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) imgResId = R.drawable.type_file;
+            else imgResId = R.drawable.type_dir;
+            itemList.add(new Item(imgResId, files[i].getName(), files[i]));
+        }
+        return itemList;
     }
 
     public static File[] sortByType(File fileList[]) {

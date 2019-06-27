@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--自定义Dialog-->
+    <style name="Dialog" parent="Base.Theme.AppCompat.Dialog">
+        <!--设置没有ActionBar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Dialog的windowFrame框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--设置窗口内容不覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 是否显示title -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- Dialog的背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--设置动画-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 背景是否模糊显示 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--ButtonDark-->
+    <style name="ButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/nearBlack</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/pureWhite</item>
+    </style>
+
+    <!--ButtonLight-->
+    <style name="ButtonLight" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimary20</item>
+        <item name="colorButtonNormal">@color/pureWhite</item>
+        <item name="android:textColor">@color/nearBlack</item>
+    </style>
+
+    <!--ButtonPink-->
+    <style name="ButtonPink" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/pureWhite</item>
+        <item name="colorButtonNormal">@color/babyPink</item>
+        <item name="android:textColor">@color/pureWhite</item>
+    </style>
+</resources>

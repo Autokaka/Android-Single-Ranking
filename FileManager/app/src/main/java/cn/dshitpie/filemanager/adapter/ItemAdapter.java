@@ -77,26 +77,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         return accessRoute.peek();
     }
 
-    //绑定视图层和数据层
-    @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        RecyclerViewItem item = itemList.get(position);
-        holder.itemImage.setImageResource(item.getImageId());
-        holder.itemName.setText(item.getItemName());
-        //此处必须重新设置初始颜色和文字粗细, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
-        holder.itemName.setTextColor(ContextCompat.getColor(context, R.color.recyclerViewItemTextPrimary));
-        holder.itemName.setTypeface(Typeface.DEFAULT);
-        if (!highlightItemNameList.isEmpty()) {
-            for (int i = 0; i < highlightItemNameList.size(); i++) {
-                int highlightIndex = highlightItemNameList.get(i);
-                if (position == highlightIndex) {
-                    holder.itemName.setTextColor(Color.BLUE);
-                    holder.itemName.setTypeface(Typeface.DEFAULT_BOLD);
-                }
-            }
-        }
-    }
-
     public void updateItemList(File fileList[]) {
         Log.d(TagConsultant.TAG, "-----updateItemList-----");
         itemList.clear();
@@ -104,13 +84,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         //排序
         fileManager.sortByType(fileList);
         //刷新数据
-        RecyclerViewItem addItem = null;
-        int addImageId = 0;
+        RecyclerViewItem item = null;
+        int imageId = 0;
         for (int i = 0; i < fileList.length; i++) {
-            if (fileList[i].isDirectory()) addImageId = R.drawable.directory;
-            else addImageId = R.drawable.file_normal;
-            addItem = new RecyclerViewItem(addImageId, fileList[i].getName(), fileList[i]);
-            itemList.add(addItem);
+            if (fileList[i].isDirectory()) imageId = R.drawable.directory;
+            else imageId = R.drawable.file_normal;
+            item = new RecyclerViewItem(imageId, fileList[i].getName(), fileList[i].getAbsoluteFile());
+            itemList.add(item);
         }
         Log.d(TagConsultant.TAG, "-----updateItemList(Done)-----");
     }
@@ -149,6 +129,26 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         accessRoute.push(addFile);
         Log.d(TagConsultant.TAG, "当前访问路径反馈: " + accessRoute);
         Log.d(TagConsultant.TAG, "-----addToAccessRoute(Done)-----");
+    }
+
+    //绑定视图层和数据层
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        RecyclerViewItem item = itemList.get(position);
+        holder.itemImage.setImageResource(item.getImageId());
+        holder.itemName.setText(item.getItemName());
+        //此处必须重新设置初始颜色和文字粗细, 否则走highlight部分的时候会出现渲染错误(神学, 无力)
+        holder.itemName.setTextColor(ContextCompat.getColor(context, R.color.recyclerViewItemTextPrimary));
+        holder.itemName.setTypeface(Typeface.DEFAULT);
+        if (!highlightItemNameList.isEmpty()) {
+            for (int i = 0; i < highlightItemNameList.size(); i++) {
+                int highlightIndex = highlightItemNameList.get(i);
+                if (position == highlightIndex) {
+                    holder.itemName.setTextColor(Color.BLUE);
+                    holder.itemName.setTypeface(Typeface.DEFAULT_BOLD);
+                }
+            }
+        }
     }
 
     //渲染视图

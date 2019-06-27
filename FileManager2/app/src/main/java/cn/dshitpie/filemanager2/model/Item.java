@@ -1,30 +1,24 @@
-package cn.dshitpie.filemanager.view;
+package cn.dshitpie.filemanager2.model;
 
 import java.io.File;
 
-public class RecyclerViewItem {
+public class Item {
+    private int imgResId;
     private String itemName;
-    private int imageId;
     private File itemFile;
 
-    public RecyclerViewItem() {
-        itemName = "";
-        itemFile = new File("");
-        imageId = 0;
-    }
-
-    public RecyclerViewItem(int imageId, String itemName, File itemFile) {
-        setImageId(imageId);
+    public Item(int imgResId, String itemName, File itemFile) {
+        setImgResId(imgResId);
         setItemName(itemName);
         setItemFile(itemFile);
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImgResId(int imgResId) {
+        this.imgResId = imgResId;
     }
 
-    public int getImageId() {
-        return imageId;
+    public int getImgResId() {
+        return imgResId;
     }
 
     public void setItemName(String itemName) {

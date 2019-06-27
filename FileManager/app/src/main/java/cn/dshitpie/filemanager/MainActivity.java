@@ -15,11 +15,16 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionContent;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,13 +32,15 @@ import java.util.ArrayList;
 import cn.dshitpie.filemanager.adapter.ItemAdapter;
 import cn.dshitpie.filemanager.adapter.RecyclerViewInterface;
 import cn.dshitpie.filemanager.utils.CodeConsultant;
+import cn.dshitpie.filemanager.utils.FileManager;
 import cn.dshitpie.filemanager.utils.PermissionManager;
 import cn.dshitpie.filemanager.utils.TagConsultant;
 import cn.dshitpie.filemanager.view.RecyclerViewItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private PermissionManager permissionManager;
-    ItemAdapter itemAdapter;
+    private TextView textViewRomInfo;
+    private ItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +52,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
-                intent.putExtra("nowInFile", itemAdapter.tellNowInFile());
+                intent.putExtra(TagConsultant.NOW_IN_FILE, itemAdapter.tellNowInFile());
                 startActivityForResult(intent, CodeConsultant.ADD_ITEM_ACTIVITY);
             }
         });
-        //初始化左侧抽屉
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //初始化搜索栏
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        FloatingSearchView floatingSearchView = findViewById(R.id.main_activity_floating_search_view);
-        floatingSearchView.attachNavigationDrawerToMenuButton(drawerLayout);
+
         //初始化权限申请工具类并申请权限
         permissionManager = new PermissionManager();
         permissionManager.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         permissionManager.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         permissionManager.request(MainActivity.this);
+
         //初始化RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -87,6 +89,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         itemAdapter.updateItemList(itemAdapter.tellNowInFile().listFiles());
         itemAdapter.notifyDataSetChanged();
+
+        //初始化左侧抽屉
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //初始化搜索栏
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        FloatingSearchView floatingSearchView = findViewById(R.id.main_activity_floating_search_view);
+        floatingSearchView.attachNavigationDrawerToMenuButton(drawerLayout);
+        floatingSearchView.setSearchHint("" + itemAdapter.tellNowInFile());
+
+        //初始化内存信息显示
+        textViewRomInfo = findViewById(R.id.app_bar_main_text_view);
+        String romInfo = "";
+        romInfo += FileManager.getRomInfo(this, itemAdapter.tellNowInFile());
+        romInfo += "\n" + FileManager.getFileCountInfo(itemAdapter.tellNowInFile());
+        textViewRomInfo.setText(romInfo);
+
         //初始化RefreshLayout
         RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
@@ -110,28 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
         else if (!itemAdapter.back()) super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -193,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     itemAdapter.setHighlightItemName(itemName);
                     itemAdapter.notifyDataSetChanged();
                 }
+                break;
             }
         }
     }

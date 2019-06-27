@@ -20,44 +20,43 @@
 
             <com.arlib.floatingsearchview.FloatingSearchView
                 android:id="@+id/main_activity_floating_search_view"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="-15dp"
                 app:floatingSearch_dimBackground="false"
                 app:floatingSearch_searchHint="@string/app_name"
+                app:floatingSearch_searchInputTextSize="5sp"
                 app:floatingSearch_suggestionsListAnimDuration="250"
                 app:floatingSearch_showSearchKey="false"
                 app:floatingSearch_leftActionMode="showHamburger"
-                app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+                app:floatingSearch_close_search_on_keyboard_dismiss="true">
 
-            <!--记得规范一下, 这里根本没写完-->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="-10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="-2dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="4"
-                android:theme="@style/ButtonLight"
-                android:text="内存信息"
-                android:textSize="10sp"
-                android:textAlignment="textStart"/>
+                <TextView
+                    android:id="@+id/app_bar_main_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_vertical|end"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorAccent"/>
+
+            </com.arlib.floatingsearchview.FloatingSearchView>
 
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/fab_add" />
 
