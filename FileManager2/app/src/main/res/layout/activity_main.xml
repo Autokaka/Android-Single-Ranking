@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_reflayout"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:baselineAligned="false">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_recyview"
+    <include layout="@layout/toolbar"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/main_reflayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_recyview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

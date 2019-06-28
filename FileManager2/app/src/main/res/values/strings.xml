@@ -16,4 +16,8 @@
     <string name="share">分享</string>
     <string name="openas">打开方式</string>
     <string name="add_to_bookmark">添加书签</string>
+    <string name="select_all">全选</string>
+    <string name="sort_by">排序方式</string>
+    <string name="exit">退出</string>
+    <string name="file_name">文件名</string>
 </resources>

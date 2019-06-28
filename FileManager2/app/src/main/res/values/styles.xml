@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -29,6 +29,29 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <!-- 背景是否模糊显示 -->
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--自定义Menu-->
+    <style name="Menu" parent="Base.Theme.AppCompat.Dialog">
+        <!--设置没有ActionBar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Dialog的windowFrame框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--设置窗口内容不覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 是否显示title -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- Menu的背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--设置动画-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 背景是否模糊显示 -->
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <!--ButtonDark-->

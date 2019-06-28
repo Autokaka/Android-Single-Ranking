@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ruffian.library.widget.RLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:background_normal="@color/pureWhite"
+    app:corner_radius="5dp"
+    android:orientation="vertical">
+
+    <!--上方标题和输入框-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_build"
+            android:textColor="@color/nearBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/build_editext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="@string/file_name"
+            app:met_baseColor="@color/colorPrimary"
+            app:met_underlineColor="@color/colorPrimary"
+            app:met_primaryColor="@color/colorPrimary"
+            app:met_minCharacters="0"
+            app:met_maxCharacters="20"
+            app:met_clearButton="true"
+            app:met_singleLineEllipsis="true"
+            app:met_autoValidate="true"/>
+
+    </LinearLayout>
+
+    <!--下方三个按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/new_file"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:theme="@style/ButtonDark"
+            style=""
+            android:text="@string/file"/>
+
+        <Button
+            android:id="@+id/build_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:theme="@style/ButtonPink"
+            style=""
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/new_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:theme="@style/ButtonDark"
+            style=""
+            android:text="@string/directory"/>
+
+    </LinearLayout>
+
+</com.ruffian.library.widget.RLinearLayout>

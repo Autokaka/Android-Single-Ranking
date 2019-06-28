@@ -64,7 +64,7 @@ public class FileManager {
         return romInfo;
     }
 
-    public static String getFileCountInfo(File file) {
+    public static String getCntInfo(File file) {
         int fileCnt = 0, dirCnt = 0;
         File childFile[] = file.listFiles();
         for (int i = 0; i < childFile.length; i++) {
@@ -76,9 +76,9 @@ public class FileManager {
         return cntInfo;
     }
 
-    public static int newFileIn(File parentDirFile, String newFileName) {
-        if (!parentDirFile.isDirectory()) return CodeConsultant.OPERATE_FAIL;
-        File newFileFile = new File(parentDirFile.getAbsolutePath() + "/" + newFileName);
+    public static int newFileIn(File file, String name) {
+        if (!file.isDirectory()) return CodeConsultant.OPERATE_FAIL;
+        File newFileFile = new File(file.getAbsolutePath() + "/" + name);
         if (newFileFile.exists()) return CodeConsultant.FILE_ALREADY_EXISTS;
         try {
             newFileFile.createNewFile();
@@ -89,9 +89,9 @@ public class FileManager {
         return CodeConsultant.OPERATE_FAIL;
     }
 
-    public static int newDirIn(File parentDirFile, String newDirectoryName) {
-        if (!parentDirFile.isDirectory()) return CodeConsultant.OPERATE_FAIL;
-        File newDirectoryFile = new File(parentDirFile.getAbsolutePath() + "/" + newDirectoryName);
+    public static int newDirIn(File file, String name) {
+        if (!file.isDirectory()) return CodeConsultant.OPERATE_FAIL;
+        File newDirectoryFile = new File(file.getAbsolutePath() + "/" + name);
         if (newDirectoryFile.exists()) return CodeConsultant.FILE_ALREADY_EXISTS;
         newDirectoryFile.mkdirs();
         if (newDirectoryFile.exists()) return CodeConsultant.OPERATE_SUCCESS;
@@ -128,7 +128,7 @@ public class FileManager {
     public static int rename(File file, String newName) {
         if (!file.exists()) return CodeConsultant.FILE_NOT_EXISTS;
         else if (newName.equals(file.getName())) return CodeConsultant.OPERATE_FAIL;
-        else if (newName.equals(TagConsultant.FILE_DEFAULT_NAME)) return CodeConsultant.OPERATE_FAIL;
+        else if (newName.equals(TagConsultant.NEW_FILE_OR_DIR)) return CodeConsultant.OPERATE_FAIL;
         else {
             String parentFilePath = file.getParent();
             File newFile = new File(parentFilePath + "/" + newName);

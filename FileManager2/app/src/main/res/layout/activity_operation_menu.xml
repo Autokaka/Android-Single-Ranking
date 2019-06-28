@@ -6,17 +6,16 @@
     android:layout_height="wrap_content"
     app:background_normal="@color/pureWhite"
     app:corner_radius="5dp"
-    android:padding="10dp"
     android:orientation="vertical">
     <!--第一行-->
-    <com.ruffian.library.widget.RLinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="false">
         <!--复制-->
         <Button
-            android:id="@+id/menu_activity_text_view_copy"
+            android:id="@+id/menu_copy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -30,7 +29,7 @@
             android:layout_weight="1"/>
         <!--剪切-->
         <Button
-            android:id="@+id/menu_activity_text_view_shear"
+            android:id="@+id/menu_shear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -42,7 +41,7 @@
             android:theme="@style/ButtonLight"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>
-    </com.ruffian.library.widget.RLinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <!--第二行-->
     <com.ruffian.library.widget.RLinearLayout
@@ -52,7 +51,7 @@
         android:baselineAligned="false">
         <!--链接-->
         <Button
-            android:id="@+id/menu_activity_text_view_link"
+            android:id="@+id/menu_link"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -66,7 +65,7 @@
             android:layout_weight="1"/>
         <!--重命名-->
         <Button
-            android:id="@+id/menu_activity_text_view_rename"
+            android:id="@+id/menu_rename"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -88,7 +87,7 @@
         android:baselineAligned="false">
         <!--删除-->
         <Button
-            android:id="@+id/menu_activity_text_view_delete"
+            android:id="@+id/menu_delete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -102,7 +101,7 @@
             android:layout_weight="1"/>
         <!--压缩-->
         <Button
-            android:id="@+id/menu_activity_text_view_compress"
+            android:id="@+id/menu_compress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -124,7 +123,7 @@
         android:baselineAligned="false">
         <!--属性-->
         <Button
-            android:id="@+id/menu_activity_text_view_attribute"
+            android:id="@+id/menu_attribute"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -138,7 +137,7 @@
             android:layout_weight="1"/>
         <!--分享-->
         <Button
-            android:id="@+id/menu_activity_text_view_share"
+            android:id="@+id/menu_share"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -160,7 +159,7 @@
         android:baselineAligned="false">
         <!--打开方式-->
         <Button
-            android:id="@+id/menu_activity_text_view_openas"
+            android:id="@+id/menu_openas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -174,7 +173,7 @@
             android:layout_weight="1"/>
         <!--添加书签-->
         <Button
-            android:id="@+id/menu_activity_text_view_bookmark"
+            android:id="@+id/menu_bookmark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"

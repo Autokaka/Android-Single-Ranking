@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <!--左侧info-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <!--路径-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/route_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/app_name"
+                android:textColor="@color/pureWhite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxEms="15"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:layout_weight="1"/>
+            <!--内存信息-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rom_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/app_name"
+                android:textColor="@color/pureWhite"
+                android:maxEms="20"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:layout_weight="1"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <!--右侧菜单-->
+        <Button
+            android:id="@+id/toolbar_menu"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:theme="@style/ButtonLight"
+            android:layout_marginEnd="10dp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.Toolbar>

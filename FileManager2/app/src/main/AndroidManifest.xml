@@ -13,6 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.NewBuild"
+            android:launchMode="singleTask"
+            android:theme="@style/Dialog" />
+        <activity
+            android:name=".activity.ToolbarMenu"
+            android:launchMode="singleTask"
+            android:theme="@style/Menu" />
+        <activity
             android:name=".activity.OperationMenu"
             android:launchMode="singleTask"
             android:theme="@style/Dialog" />
