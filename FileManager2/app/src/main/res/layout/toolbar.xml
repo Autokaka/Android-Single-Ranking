@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <!--左侧info-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/info"
@@ -54,6 +55,7 @@
             android:layout_gravity="center_vertical"
             android:theme="@style/ButtonLight"
             android:layout_marginEnd="10dp"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.Toolbar>

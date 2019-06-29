@@ -2,14 +2,14 @@ package cn.dshitpie.filemanager2.event;
 
 import java.io.File;
 
-public class NewBuildEvent {
+public class OperationMenuEvent {
     private File file;
 
-    public NewBuildEvent(File file) {
+    public OperationMenuEvent(File file) {
         this.file = file;
     }
 
-    public File tellHighlightFile() {
+    public File tellSelectFile() {
         return file;
     }
 }

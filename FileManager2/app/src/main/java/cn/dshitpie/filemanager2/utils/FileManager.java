@@ -9,6 +9,8 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +22,22 @@ public class FileManager {
 
     public static File getSdCard0Directory() {
         return Environment.getExternalStorageDirectory();
+    }
+
+    public static boolean isSdCard0Dir(File file) {
+        if (file.equals(getSdCard0Directory())) return true;
+        else return false;
+    }
+
+    /**
+     * 传入一个File, 返回这个File所在File列表的位置序号
+     * */
+    public static int locate(File file) {
+        if (FileManager.isSdCard0Dir(file)) return -1;
+        File list[] = sortByType(file.getParentFile().listFiles());
+        int index = -1;
+        for (int i = 0; i < list.length; i++) if (list[i].equals(file)) index = i;
+        return index;
     }
 
     public static Item convertToItem(File file) {
@@ -72,7 +90,7 @@ public class FileManager {
             else if (childFile[i].isDirectory()) dirCnt++;
         }
         String cntInfo = "";
-        cntInfo += "文件数: " + fileCnt + " 文件夹数: " + dirCnt;
+        cntInfo += "文件夹数: " + dirCnt + " 文件数: " + fileCnt;
         return cntInfo;
     }
 
@@ -134,6 +152,89 @@ public class FileManager {
             File newFile = new File(parentFilePath + "/" + newName);
             if (file.renameTo(newFile)) return CodeConsultant.OPERATE_SUCCESS;
             else return CodeConsultant.OPERATE_FAIL;
+        }
+    }
+
+    /**
+     * 把下面两个逻辑改了, 就能实现复制粘贴了
+     * */
+    private static boolean copyFile(String oldPath$Name, String newPath$Name) {
+        try {
+            File oldFile = new File(oldPath$Name);
+            if (!oldFile.exists()) {
+                Log.e("--Method--", "copyFile:  oldFile not exist.");
+                return false;
+            } else if (!oldFile.isFile()) {
+                Log.e("--Method--", "copyFile:  oldFile not file.");
+                return false;
+            } else if (!oldFile.canRead()) {
+                Log.e("--Method--", "copyFile:  oldFile cannot read.");
+                return false;
+            }
+            FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
+            FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
+            byte[] buffer = new byte[1024];
+            int byteRead;
+            while (-1 != (byteRead = fileInputStream.read(buffer))) {
+                fileOutputStream.write(buffer, 0, byteRead);
+            }
+            fileInputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean copyFolder(String oldPath, String newPath) {
+        try {
+            File newFile = new File(newPath);
+            if (!newFile.exists()) {
+                if (!newFile.mkdirs()) {
+                    Log.e("--Method--", "copyFolder: cannot create directory.");
+                    return false;
+                }
+            }
+            File oldFile = new File(oldPath);
+            String[] files = oldFile.list();
+            File temp;
+            for (String file : files) {
+                if (oldPath.endsWith(File.separator)) {
+                    temp = new File(oldPath + file);
+                } else {
+                    temp = new File(oldPath + File.separator + file);
+                }
+
+                if (temp.isDirectory()) {   //如果是子文件夹
+                    copyFolder(oldPath + "/" + file, newPath + "/" + file);
+                } else if (!temp.exists()) {
+                    Log.e("--Method--", "copyFolder:  oldFile not exist.");
+                    return false;
+                } else if (!temp.isFile()) {
+                    Log.e("--Method--", "copyFolder:  oldFile not file.");
+                    return false;
+                } else if (!temp.canRead()) {
+                    Log.e("--Method--", "copyFolder:  oldFile cannot read.");
+                    return false;
+                } else {
+                    FileInputStream fileInputStream = new FileInputStream(temp);
+                    FileOutputStream fileOutputStream = new FileOutputStream(newPath + "/" + temp.getName());
+                    byte[] buffer = new byte[1024];
+                    int byteRead;
+                    while ((byteRead = fileInputStream.read(buffer)) != -1) {
+                        fileOutputStream.write(buffer, 0, byteRead);
+                    }
+                    fileInputStream.close();
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

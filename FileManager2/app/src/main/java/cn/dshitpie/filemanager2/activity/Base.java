@@ -17,22 +17,46 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import cn.dshitpie.filemanager2.event.BindEventBus;
+import cn.dshitpie.filemanager2.annotation.BindEventBus;
 import cn.dshitpie.filemanager2.utils.ActivityCollector;
 
 public class Base extends AppCompatActivity {
 
     /**
-     * 设置Activity的宽和高的比例, 显示的位置
+     * 设置Activity的宽和高的比例, 以及显示的位置
      * */
-    protected void setActivityDisplay(double heightScale, double widthScale, int gravity) {
+    protected void restrictActivitySize(double heightScale, double widthScale, int gravity) {
         //设置Activity宽高
         WindowManager.LayoutParams params = getWindow().getAttributes();
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         params.height = (int) (metrics.heightPixels * heightScale);
         params.width = (int) (metrics.widthPixels * widthScale);
+        getWindow().setAttributes(params);
+        getWindow().setGravity(gravity);
+    }
+
+    /**
+     * 限制Activity的宽的比例, 以及显示的位置
+     * */
+    protected void restrictActivityWidth(double widthScale, int gravity) {
+        //设置Activity宽高
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        params.width = (int) (metrics.widthPixels * widthScale);
+        getWindow().setAttributes(params);
+        getWindow().setGravity(gravity);
+    }
+
+    /**
+     * 限制Activity的高的比例, 以及显示的位置
+     * */
+    protected void restrictActivityHeight(double heightScale, int gravity) {
+        //设置Activity宽高
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
         getWindow().setAttributes(params);
         getWindow().setGravity(gravity);
     }
@@ -54,25 +78,32 @@ public class Base extends AppCompatActivity {
     }
 
     /**
-     * 继承了Base的Activity会: 1. 根据BindEventBus注释, 全局性注册EventBus, 2. 添加自身在ActivityCollector的记录
+     * 继承了Base的Activity会:
+     * 1. 根据BindEventBus注释, 全局性注册EventBus,
+     * 2. 添加自身在ActivityCollector的记录,
+     * 3. 根据BindButterKnife注释, 全局性注册ButterKnife
      * */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.addLogAdapter(new AndroidLogAdapter());
-        Logger.d("当前活动: " + this.getClass().getSimpleName() + " 当前this: " + this);
+        Logger.d("当前活动: " + this.getClass().getSimpleName());
         ActivityCollector.addActivity(this);
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) EventBus.getDefault().register(this);
     }
 
     /**
-     * 继承了Base的Activity会: 1. 根据BindEventBus注释, 全局性解绑EventBus, 2. 删除自身在ActivityCollector的记录
+     * 继承了Base的Activity会:
+     * 1. 根据BindEventBus注释, 全局性解绑EventBus,
+     * 2. 删除自身在ActivityCollector的记录,
+     * 3. 根据BindButterKnife注释, 全局性注册ButterKnife
      * */
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ActivityCollector.removeActivity(this);
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) EventBus.getDefault().unregister(this);
+        Logger.d("当前活动: " + this.getClass().getSimpleName());
+        super.onDestroy();
     }
 
     @Override

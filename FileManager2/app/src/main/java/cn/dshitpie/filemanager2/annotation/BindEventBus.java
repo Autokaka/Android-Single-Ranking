@@ -1,4 +1,4 @@
-package cn.dshitpie.filemanager2.event;
+package cn.dshitpie.filemanager2.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

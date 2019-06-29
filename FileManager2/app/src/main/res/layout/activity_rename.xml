@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ruffian.library.widget.RLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ruffian.library.widget.RLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,7 @@
     android:gravity="center_vertical">
 
     <!--上方标题和输入框-->
-    <com.ruffian.library.widget.RLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -18,14 +19,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_build"
+            android:text="@string/rename"
             android:textColor="@color/nearBlack"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/editext"
+            android:id="@id/editext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -43,25 +44,25 @@
             app:met_singleLineEllipsis="true"
             app:met_autoValidate="true"/>
 
-    </com.ruffian.library.widget.RLinearLayout>
+    </LinearLayout>
 
-    <!--下方三个按钮-->
-    <com.ruffian.library.widget.RLinearLayout
+    <!--下方两个按钮-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_file"
+            android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:theme="@style/ButtonDark"
             style=""
-            android:text="@string/file"/>
+            android:text="@string/confirm"/>
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -69,15 +70,6 @@
             style=""
             android:text="@string/cancel"/>
 
-        <Button
-            android:id="@+id/btn_dir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:theme="@style/ButtonDark"
-            style=""
-            android:text="@string/directory"/>
-
-    </com.ruffian.library.widget.RLinearLayout>
+    </LinearLayout>
 
 </com.ruffian.library.widget.RLinearLayout>

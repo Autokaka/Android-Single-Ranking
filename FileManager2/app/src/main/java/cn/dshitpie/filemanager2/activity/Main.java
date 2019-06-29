@@ -2,6 +2,7 @@ package cn.dshitpie.filemanager2.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +29,12 @@ import java.util.List;
 
 import cn.dshitpie.filemanager2.R;
 import cn.dshitpie.filemanager2.adapter.RecyclerViewAdapter;
-import cn.dshitpie.filemanager2.event.BindEventBus;
+import cn.dshitpie.filemanager2.annotation.BindEventBus;
+import cn.dshitpie.filemanager2.event.DeleteEvent;
 import cn.dshitpie.filemanager2.event.MainEvent;
 import cn.dshitpie.filemanager2.event.NewBuildEvent;
-import cn.dshitpie.filemanager2.event.ToolbarMenuEvent;
+import cn.dshitpie.filemanager2.event.RenameEvent;
 import cn.dshitpie.filemanager2.model.Item;
-import cn.dshitpie.filemanager2.utils.CodeConsultant;
 import cn.dshitpie.filemanager2.utils.FileManager;
 import cn.dshitpie.filemanager2.utils.PermissionManager;
 
@@ -50,13 +51,22 @@ public class Main extends Base {
     private TextView romInfo;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void subscribeToolBarMenu(NewBuildEvent event) {
-        int result = event.getResult();
-        if (result == CodeConsultant.OPERATE_SUCCESS) {
-            Toast.makeText(this, "新建成功", Toast.LENGTH_LONG).show();
-            recyAdapter.loadPage();
-        } else if (result == CodeConsultant.OPERATE_FAIL) Toast.makeText(this, "新建失败", Toast.LENGTH_LONG).show();
-        else Toast.makeText(this, "文件已存在", Toast.LENGTH_LONG).show();
+    public void subscribeDelete(DeleteEvent event) {
+        recyAdapter.loadPage();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void subscribeNewBuild(NewBuildEvent event) {
+        File file = event.tellHighlightFile();
+        recyAdapter.loadPage();
+        recyAdapter.highlight(file, R.color.colorPrimary);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void subscribeRename(RenameEvent event) {
+        File renamedFile = event.tellRenamedFile();
+        recyAdapter.loadPage();
+        recyAdapter.highlight(renamedFile, R.color.colorPrimary);
     }
 
     /**
@@ -80,7 +90,7 @@ public class Main extends Base {
     }
 
     /**
-     * 初始化ToolBar的部分内容
+     * 初始化ToolBar的内容
      * */
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
@@ -100,6 +110,7 @@ public class Main extends Base {
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -192,9 +203,9 @@ public class Main extends Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initPermission();
         initToolbar();
         initRefreshLayout();
-        initPermission();
         initRecyView();
         initDrawer();
     }

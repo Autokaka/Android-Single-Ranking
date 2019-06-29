@@ -2,14 +2,14 @@ package cn.dshitpie.filemanager2.event;
 
 import java.io.File;
 
-public class NewBuildEvent {
+public class RenameEvent {
     private File file;
 
-    public NewBuildEvent(File file) {
+    public RenameEvent(File file) {
         this.file = file;
     }
 
-    public File tellHighlightFile() {
+    public File tellRenamedFile() {
         return file;
     }
 }

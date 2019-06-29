@@ -1,5 +1,10 @@
 package cn.dshitpie.filemanager2.adapter;
 
+import android.content.Context;
+import android.graphics.Typeface;
+import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -82,9 +87,22 @@ public class RecyclerViewAdapter extends BaseQuickAdapter<Item, BaseViewHolder> 
         moveToPosition(manager, lastPosition.pop());
     }
 
+    /**
+     * 通过传入的File将列表的某一个item高亮, 颜色通过colorId传入
+     * */
+    public void highlight(File file, int colorId) {
+        int position = FileManager.locate(file);
+        Item item = getItem(position);
+        item.setTextColor(colorId);
+        item.setTypeface(Typeface.DEFAULT_BOLD);
+        notifyItemChanged(position);
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, Item item) {
         helper.setImageResource(R.id.item_img, item.getImgResId())
-                .setText(R.id.item_name, item.getItemName());
+                .setText(R.id.item_name, item.getItemName())
+                .setTextColor(R.id.item_name, item.getTextColor())
+                .setTypeface(R.id.item_name, item.getTypeface());
     }
 }

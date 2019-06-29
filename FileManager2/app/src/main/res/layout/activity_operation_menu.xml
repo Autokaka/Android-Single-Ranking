@@ -3,12 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:background_normal="@color/pureWhite"
     app:corner_radius="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_vertical">
     <!--第一行-->
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.ruffian.library.widget.RLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -41,7 +42,7 @@
             android:theme="@style/ButtonLight"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.ruffian.library.widget.RLinearLayout>
 
     <!--第二行-->
     <com.ruffian.library.widget.RLinearLayout
