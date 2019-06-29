@@ -78,7 +78,7 @@ public class FileManager {
 
     public static String getRomInfo(Context context, File file) {
         String romInfo = "";
-        romInfo += "储存: " + Formatter.formatFileSize(context, file.getTotalSpace()) + "/" + Formatter.formatFileSize(context, file.getUsableSpace());
+        romInfo += "储存: " + Formatter.formatFileSize(context, file.getUsableSpace()) + "/" + Formatter.formatFileSize(context, file.getTotalSpace());
         return romInfo;
     }
 
@@ -156,7 +156,7 @@ public class FileManager {
     }
 
     /**
-     * 把下面两个逻辑改了, 就能实现复制粘贴了
+     * 考试以后要先做什么: 把下面两个逻辑改了, 然后实现复制粘贴功能
      * */
     private static boolean copyFile(String oldPath$Name, String newPath$Name) {
         try {

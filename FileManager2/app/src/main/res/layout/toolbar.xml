@@ -13,20 +13,23 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <!--左侧info-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/info"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1">
+
             <!--路径-->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/route_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/app_name"
                 android:textColor="@color/pureWhite"
                 android:textSize="20sp"
@@ -40,12 +43,15 @@
                 android:id="@+id/rom_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/app_name"
                 android:textColor="@color/pureWhite"
+                android:textSize="12sp"
                 android:maxEms="20"
                 android:singleLine="true"
                 android:ellipsize="start"
                 android:layout_weight="1"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
         <!--右侧菜单-->
         <Button
