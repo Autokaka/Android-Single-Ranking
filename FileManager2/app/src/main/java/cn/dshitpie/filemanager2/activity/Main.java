@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +32,14 @@ import java.util.List;
 import cn.dshitpie.filemanager2.R;
 import cn.dshitpie.filemanager2.adapter.RecyclerViewAdapter;
 import cn.dshitpie.filemanager2.annotation.BindEventBus;
+import cn.dshitpie.filemanager2.event.CopyEvent;
 import cn.dshitpie.filemanager2.event.DeleteEvent;
 import cn.dshitpie.filemanager2.event.MainEvent;
 import cn.dshitpie.filemanager2.event.NewBuildEvent;
 import cn.dshitpie.filemanager2.event.RenameEvent;
 import cn.dshitpie.filemanager2.model.Item;
+import cn.dshitpie.filemanager2.utils.CodeConsultant;
+import cn.dshitpie.filemanager2.utils.ColorManager;
 import cn.dshitpie.filemanager2.utils.FileManager;
 import cn.dshitpie.filemanager2.utils.PermissionManager;
 
@@ -45,10 +50,12 @@ public class Main extends Base {
     private RecyclerView recyView;
     private RecyclerViewAdapter recyAdapter;
     //ToolBar
-    private Toolbar toolbar;
+    Toolbar toolbar;
     LinearLayoutCompat info;
     private TextView routeInfo;
     private TextView romInfo;
+    File copyFile;
+    Button btnPaste, btnExitPaste;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void subscribeDelete(DeleteEvent event) {
@@ -67,6 +74,12 @@ public class Main extends Base {
         File renamedFile = event.tellRenamedFile();
         recyAdapter.loadPage();
         recyAdapter.highlight(renamedFile, R.color.colorPrimary);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void subscribeCopy(CopyEvent event) {
+        copyFile = event.tellCopyFile();
+        enterCopyMode();
     }
 
     /**
@@ -124,6 +137,39 @@ public class Main extends Base {
                 Intent intent = new Intent(Main.this, ToolbarMenu.class);
                 startActivity(intent);
                 EventBus.getDefault().postSticky(new MainEvent(recyAdapter.accessRoute().peek()));
+            }
+        });
+
+        /**
+         * 右上角粘贴按钮
+         * 当且仅当进入复制模式的时候, 粘贴按钮才会显示,
+         * 所以粘贴按钮的事件响应必然建立在"已经进入复制模式"这个事实,
+         * 复制模式: toolbar主题色改变, 粘贴按钮显现, 复制路径绝不会为空
+         * */
+        btnExitPaste = findViewById(R.id.btn_exit);
+        btnPaste = findViewById(R.id.btn_paste);
+
+        btnExitPaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exitCopyMode();
+            }
+        });
+        btnPaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int result = FileManager.copy(copyFile, recyAdapter.accessRoute().peek());
+                if (CodeConsultant.OPERATE_FAIL == result)
+                    Toast.makeText(Main.this, "操作失败", Toast.LENGTH_LONG).show();
+                else if (CodeConsultant.FILE_NOT_EXISTS == result)
+                    Toast.makeText(Main.this, "拷贝文件不存在", Toast.LENGTH_LONG).show();
+                else if (CodeConsultant.FILE_NOT_READABLE == result)
+                    Toast.makeText(Main.this, "文件只读", Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(Main.this, "操作成功", Toast.LENGTH_LONG).show();
+                    exitCopyMode();
+                    recyAdapter.loadPage();
+                }
             }
         });
     }
@@ -211,7 +257,10 @@ public class Main extends Base {
     }
 
     /**
-     * 重写返回按钮点击逻辑, 到达根目录时, 程序退出, 其他情况下均回到上级目录, 跳转到上次的位置, 并将路径信息打印到toolbar
+     * 重写返回按钮点击逻辑,
+     * 如果在复制模式, 需要先退出复制模式,
+     * 到达根目录时, 程序退出,
+     * 其他情况下均回到上级目录, 跳转到上次的位置, 并将路径信息打印到toolbar
      * */
     @Override
     public void onBackPressed() {
@@ -220,6 +269,28 @@ public class Main extends Base {
             recyAdapter.backPage(layoutManager);
             syncInfo(recyAdapter.accessRoute().peek());
         }
+    }
+
+    /**
+     * 激活Main的复制粘贴模式:
+     * 修改toolbar的主题色为colorAccent,
+     * 展示"退出复制模式"按钮 和 "粘贴"按钮
+     * */
+    private void enterCopyMode() {
+        toolbar.setBackgroundColor(ColorManager.findColorById(R.color.colorAccent));
+        btnExitPaste.setVisibility(View.VISIBLE);
+        btnPaste.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 激活Main的复制粘贴模式:
+     * 修改toolbar的主题色为colorPrimary,
+     * 隐藏"退出复制模式"按钮 和 "粘贴"按钮
+     * */
+    private void exitCopyMode() {
+        toolbar.setBackgroundColor(ColorManager.findColorById(R.color.colorPrimary));
+        btnExitPaste.setVisibility(View.GONE);
+        btnPaste.setVisibility(View.GONE);
     }
 
     /**

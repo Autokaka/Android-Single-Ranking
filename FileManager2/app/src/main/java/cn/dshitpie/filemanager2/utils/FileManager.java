@@ -11,6 +11,8 @@ import com.orhanobut.logger.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -156,85 +158,50 @@ public class FileManager {
     }
 
     /**
-     * 考试以后要先做什么: 把下面两个逻辑改了, 然后实现复制粘贴功能
+     * 这是一个很简单的复制粘贴函数, 它没有"覆盖"处理机制, 后期需要考虑dstFile内如果已经存在同名文件的更加复杂的情况
      * */
-    private static boolean copyFile(String oldPath$Name, String newPath$Name) {
+    public static synchronized int copy(File srcFile, File dstFile) {
+        if (!dstFile.exists() && !dstFile.mkdirs()) return CodeConsultant.OPERATE_FAIL;
         try {
-            File oldFile = new File(oldPath$Name);
-            if (!oldFile.exists()) {
-                Log.e("--Method--", "copyFile:  oldFile not exist.");
-                return false;
-            } else if (!oldFile.isFile()) {
-                Log.e("--Method--", "copyFile:  oldFile not file.");
-                return false;
-            } else if (!oldFile.canRead()) {
-                Log.e("--Method--", "copyFile:  oldFile cannot read.");
-                return false;
+            if (srcFile.isFile()) return copyFile(srcFile, new File(dstFile, srcFile.getName()));
+            else {
+                File[] srcChildFiles = srcFile.listFiles();
+                int result;
+                for (File cursor : srcChildFiles) {
+                    File dstChild = new File(dstFile, cursor.getName());
+                    if (cursor.isFile()) result = copyFile(cursor, dstChild);
+                    else result = copy(cursor, dstChild);
+                    if (CodeConsultant.OPERATE_SUCCESS != result) return result;
+                }
+                return CodeConsultant.OPERATE_SUCCESS;
             }
-            FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
-            FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
-            byte[] buffer = new byte[1024];
-            int byteRead;
-            while (-1 != (byteRead = fileInputStream.read(buffer))) {
-                fileOutputStream.write(buffer, 0, byteRead);
-            }
-            fileInputStream.close();
-            fileOutputStream.flush();
-            fileOutputStream.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            Log.d("testapp", e.getMessage());
+            return CodeConsultant.OPERATE_FAIL;
         }
     }
 
-    private boolean copyFolder(String oldPath, String newPath) {
+    private static synchronized int copyFile(File srcFile, File dstFile) {
         try {
-            File newFile = new File(newPath);
-            if (!newFile.exists()) {
-                if (!newFile.mkdirs()) {
-                    Log.e("--Method--", "copyFolder: cannot create directory.");
-                    return false;
-                }
+            if (!srcFile.exists()) return CodeConsultant.FILE_NOT_EXISTS;
+            else if (!srcFile.canRead()) return CodeConsultant.FILE_NOT_READABLE;
+            else {
+                if (!dstFile.exists() && !dstFile.createNewFile()) return CodeConsultant.OPERATE_FAIL;
+                FileInputStream fileInputStream = new FileInputStream(srcFile);
+                FileOutputStream fileOutputStream = new FileOutputStream(dstFile);
+                FileChannel inChannel = fileInputStream.getChannel();
+                FileChannel outChannel = fileOutputStream.getChannel();
+                inChannel.transferTo(0, inChannel.size(), outChannel);
+                inChannel.close();
+                outChannel.close();
+                fileInputStream.close();
+                fileOutputStream.close();
+                return CodeConsultant.OPERATE_SUCCESS;
             }
-            File oldFile = new File(oldPath);
-            String[] files = oldFile.list();
-            File temp;
-            for (String file : files) {
-                if (oldPath.endsWith(File.separator)) {
-                    temp = new File(oldPath + file);
-                } else {
-                    temp = new File(oldPath + File.separator + file);
-                }
-
-                if (temp.isDirectory()) {   //如果是子文件夹
-                    copyFolder(oldPath + "/" + file, newPath + "/" + file);
-                } else if (!temp.exists()) {
-                    Log.e("--Method--", "copyFolder:  oldFile not exist.");
-                    return false;
-                } else if (!temp.isFile()) {
-                    Log.e("--Method--", "copyFolder:  oldFile not file.");
-                    return false;
-                } else if (!temp.canRead()) {
-                    Log.e("--Method--", "copyFolder:  oldFile cannot read.");
-                    return false;
-                } else {
-                    FileInputStream fileInputStream = new FileInputStream(temp);
-                    FileOutputStream fileOutputStream = new FileOutputStream(newPath + "/" + temp.getName());
-                    byte[] buffer = new byte[1024];
-                    int byteRead;
-                    while ((byteRead = fileInputStream.read(buffer)) != -1) {
-                        fileOutputStream.write(buffer, 0, byteRead);
-                    }
-                    fileInputStream.close();
-                    fileOutputStream.flush();
-                    fileOutputStream.close();
-                }
-            }
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return CodeConsultant.OPERATE_FAIL;
         }
     }
 }

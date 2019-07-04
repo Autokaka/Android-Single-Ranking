@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:baselineAligned="false">
 
         <!--左侧info-->
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -53,6 +54,34 @@
                 android:layout_weight="1"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <!--退出复制模式-->
+        <Button
+            android:id="@+id/btn_exit"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-15dp"
+            android:gravity="center_vertical"
+            style="?android:attr/actionButtonStyle"
+            android:drawableTop="@drawable/exit_adapt"
+            android:drawableTint="@color/pureWhite"
+            android:text="@string/exit"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:textColor="@color/pureWhite"/>
+        <!--复制粘贴按钮-->
+        <Button
+            android:id="@+id/btn_paste"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            style="?android:attr/actionButtonStyle"
+            android:drawableTop="@drawable/paste_adapt"
+            android:text="@string/paste"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:textColor="@color/pureWhite"/>
         <!--右侧菜单-->
         <Button
             android:id="@+id/toolbar_menu"

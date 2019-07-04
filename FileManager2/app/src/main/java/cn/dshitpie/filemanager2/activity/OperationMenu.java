@@ -2,10 +2,10 @@ package cn.dshitpie.filemanager2.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import cn.dshitpie.filemanager2.R;
 import cn.dshitpie.filemanager2.annotation.BindEventBus;
+import cn.dshitpie.filemanager2.event.CopyEvent;
 import cn.dshitpie.filemanager2.event.DeleteEvent;
 import cn.dshitpie.filemanager2.event.MainEvent;
 import cn.dshitpie.filemanager2.event.OperationMenuEvent;
@@ -65,7 +66,8 @@ public class OperationMenu extends Base {
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EventBus.getDefault().postSticky(new CopyEvent(selectFile));
+                finish();
             }
         });
         btnShear.setOnClickListener(new View.OnClickListener() {

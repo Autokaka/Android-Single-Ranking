@@ -9,6 +9,7 @@ import java.io.File;
 
 import cn.dshitpie.filemanager2.R;
 import cn.dshitpie.filemanager2.utils.AppManager;
+import cn.dshitpie.filemanager2.utils.ColorManager;
 
 public class Item {
     private int imgResId;
@@ -53,8 +54,8 @@ public class Item {
         return textColor;
     }
 
-    public void setTextColor(int textColor) {
-        this.textColor = ContextCompat.getColor(AppManager.getContext(), textColor);
+    public void setTextColor(int resId) {
+        this.textColor = ColorManager.findColorById(resId);
     }
 
     public Typeface getTypeface() {
