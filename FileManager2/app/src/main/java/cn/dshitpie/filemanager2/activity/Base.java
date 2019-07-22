@@ -81,7 +81,6 @@ public class Base extends AppCompatActivity {
      * 继承了Base的Activity会:
      * 1. 根据BindEventBus注释, 全局性注册EventBus,
      * 2. 添加自身在ActivityCollector的记录,
-     * 3. 根据BindButterKnife注释, 全局性注册ButterKnife
      * */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +95,6 @@ public class Base extends AppCompatActivity {
      * 继承了Base的Activity会:
      * 1. 根据BindEventBus注释, 全局性解绑EventBus,
      * 2. 删除自身在ActivityCollector的记录,
-     * 3. 根据BindButterKnife注释, 全局性注册ButterKnife
      * */
     @Override
     protected void onDestroy() {
@@ -104,11 +102,5 @@ public class Base extends AppCompatActivity {
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) EventBus.getDefault().unregister(this);
         Logger.d("当前活动: " + this.getClass().getSimpleName());
         super.onDestroy();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        if (!isFinishing()) android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

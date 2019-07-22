@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">LearnLitePal</string>
-    <string name="create_table_book">创建book表</string>
-    <string name="insert_into_table_book">给book插入数据</string>
-</resources>
